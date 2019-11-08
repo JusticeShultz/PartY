@@ -61,7 +61,7 @@ namespace PartY
 
             string newMessage = System.Text.Encoding.UTF8.GetString(readBuffer, 0, length);
 
-            PartY.messageToDisplay += newMessage + Environment.NewLine;
+            //PartY.messageToDisplay += newMessage + Environment.NewLine;
 
             stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
         }
@@ -75,11 +75,54 @@ namespace PartY
         #endregion
 
         #region API
-        internal void Send(string message)
+        internal void SendTextData(string @message)
         {
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(@message));
+        }
 
-            if(stream == null)
+        internal void SendStringData(string variable, string @string)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @string));
+        }
+
+        internal void SendVector3Data(string variable, Vector3 @vector3)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @vector3.x + "," + @vector3.y + "," + @vector3.z));
+        }
+
+        internal void SendVector2Data(string variable, Vector2 @vector2)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @vector2.x + "," + @vector2.y));
+        }
+
+        internal void SendIntegerData(string variable, int @integer)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @integer));
+        }
+
+        internal void SendFloatData(string variable, float @floatingPointNumber)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @floatingPointNumber));
+        }
+
+        internal void SendUintData(string variable, uint @unsignedInteger)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @unsignedInteger));
+        }
+
+        internal void SendLongData(string variable, float @floatingPointNumber)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @floatingPointNumber));
+        }
+
+        internal void SendData(string variable, Type @data)
+        {
+            SendPayload(System.Text.Encoding.UTF8.GetBytes(variable + "," + @data));
+        }
+
+        internal void SendPayload(byte[] buffer)
+        {
+            if (stream == null)
             {
                 PartY.instance.OnDisconnect(this);
                 return;

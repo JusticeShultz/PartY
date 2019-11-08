@@ -30,17 +30,10 @@ namespace PartY
         List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
 
         /// <summary>
-        /// The string to render in Unity.
-        /// </summary>
-        public static string messageToDisplay;
-        //public Text text;
-
-        /// <summary>
         /// Accepts new connections.  Null for clients.
         /// </summary>
         TcpListener listener;
 
-        public Text serverDebugLog;
         public InputField clientIpInput;
 
         public UnityEvent onSuccessfulConnection = new UnityEvent();
@@ -50,12 +43,14 @@ namespace PartY
         public List<Client> clients = new List<Client>();
         public List<HostedLobby> lobbies = new List<HostedLobby>();
 
+        public static bool IsConnectedToServer { get { return IsConnectedToServer; } private set { IsConnectedToServer = value; } }
         #endregion
 
         #region Unity Events
         public void Awake()
         {
             instance = this;
+            SetServerStatus(false);
         }
 
         public void ConnectToServer()
@@ -89,14 +84,21 @@ namespace PartY
                 Debug.Log("Client connected! :)");
 
             if (!client.Connected)
+            {
+                SetServerStatus(false);
                 onFailedToConnect.Invoke();
-            else onSuccessfulConnection.Invoke();
-
-            
+            }
+            else
+            {
+                SetServerStatus(true);
+                onSuccessfulConnection.Invoke();
+            }
         }
 
         protected void OnApplicationQuit()
         {
+            SetServerStatus(false);
+
             listener?.Stop();
 
             for (int i = 0; i < clientList.Count; i++)
@@ -112,31 +114,37 @@ namespace PartY
         {
             TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
             clientList.Add(new PartY_ConnectedClient(tcpClient));
-
             listener.BeginAcceptTcpClient(OnServerConnect, null);
+            SetServerStatus(true);
         }
         #endregion
 
         #region API
         public void OnDisconnect(PartY_ConnectedClient client)
         {
+            SetServerStatus(false);
             listener?.Stop();
             onDisconnect.Invoke();
             clientList.Remove(client);
         }
 
-        internal void Send(string message)
+        internal void SendTextData(string message)
         {
-            BroadcastChatMessage(message);
+            BroadcastTextMessage(message);
         }
 
-        internal static void BroadcastChatMessage(string message)
+        internal static void BroadcastTextMessage(string message)
         {
             for (int i = 0; i < instance.clientList.Count; i++)
             {
                 PartY_ConnectedClient client = instance.clientList[i];
-                client.Send(message);
+                client.SendTextData(message);
             }
+        }
+
+        public static void SetServerStatus(bool status)
+        {
+            IsConnectedToServer = status;
         }
         #endregion
     }
