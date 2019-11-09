@@ -43,7 +43,9 @@ namespace PartY
         public List<Client> clients = new List<Client>();
         public List<HostedLobby> lobbies = new List<HostedLobby>();
 
-        public static bool IsConnectedToServer { get { return IsConnectedToServer; } private set { IsConnectedToServer = value; } }
+        private static bool ConnectionStatus = false;
+
+        public static bool IsConnectedToServer { get { return ConnectionStatus; } private set { ConnectionStatus = value; } }
         #endregion
 
         #region Unity Events

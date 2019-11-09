@@ -13,6 +13,7 @@ namespace PartY
 {
     class Program
     {
+        #region Data
         public const int port = 27015;
 
         public static Program instance;
@@ -22,7 +23,9 @@ namespace PartY
         List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
 
         TcpListener listener;
+        #endregion
 
+        #region Main Async Startup
         static void Main(string[] args)
         {
             Main2();
@@ -48,7 +51,9 @@ namespace PartY
 
             }
         }
+        #endregion
 
+        #region  Application Handler
         protected void OnApplicationQuit(object sender, EventArgs e)
         {
             Console.WriteLine(DateTime.Now + ")> Server is shutting down...");
@@ -61,6 +66,7 @@ namespace PartY
 
             Task.Delay(1000);
         }
+        #endregion
 
         #region Async Events
         void OnServerConnect(IAsyncResult ar)
@@ -97,4 +103,6 @@ namespace PartY
     }
 }
 
+#region Default gateway IP
 //Default gateway: 127.0.0.1
+#endregion

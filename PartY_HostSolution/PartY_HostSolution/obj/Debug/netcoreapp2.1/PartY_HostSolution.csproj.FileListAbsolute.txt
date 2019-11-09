@@ -20,3 +20,14 @@ C:\Users\s189081\Desktop\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\n
 C:\Users\s189081\Desktop\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.AssemblyInfo.cs
 C:\Users\s189081\Desktop\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.dll
 C:\Users\s189081\Desktop\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.pdb
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\bin\Debug\netcoreapp2.1\PartY_HostSolution.deps.json
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\bin\Debug\netcoreapp2.1\PartY_HostSolution.runtimeconfig.json
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\bin\Debug\netcoreapp2.1\PartY_HostSolution.runtimeconfig.dev.json
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\bin\Debug\netcoreapp2.1\PartY_HostSolution.dll
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\bin\Debug\netcoreapp2.1\PartY_HostSolution.pdb
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.csprojAssemblyReference.cache
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.csproj.CoreCompileInputs.cache
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.AssemblyInfoInputs.cache
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.AssemblyInfo.cs
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.dll
+C:\Users\s189081\Desktop\PartY_Work\PartY\PartY_HostSolution\PartY_HostSolution\obj\Debug\netcoreapp2.1\PartY_HostSolution.pdb
