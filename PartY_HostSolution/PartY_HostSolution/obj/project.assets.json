@@ -694,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s189081\\Desktop\\PartY_Work\\PartY\\PartY_HostSolution\\PartY_HostSolution\\PartY_HostSolution.csproj",
+      "projectUniqueName": "C:\\Users\\s189081\\Desktop\\PartY\\PartY_HostSolution\\PartY_HostSolution\\PartY_HostSolution.csproj",
       "projectName": "PartY_HostSolution",
-      "projectPath": "C:\\Users\\s189081\\Desktop\\PartY_Work\\PartY\\PartY_HostSolution\\PartY_HostSolution\\PartY_HostSolution.csproj",
+      "projectPath": "C:\\Users\\s189081\\Desktop\\PartY\\PartY_HostSolution\\PartY_HostSolution\\PartY_HostSolution.csproj",
       "packagesPath": "C:\\Users\\s189081\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s189081\\Desktop\\PartY_Work\\PartY\\PartY_HostSolution\\PartY_HostSolution\\obj\\",
+      "outputPath": "C:\\Users\\s189081\\Desktop\\PartY\\PartY_HostSolution\\PartY_HostSolution\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

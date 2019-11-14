@@ -10,18 +10,23 @@ using System.IO;
 using UnityEngine.Events;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace PartY
 {
     public class PartY : MonoBehaviour
     {
         #region Data
+        public static string path;
+        public static bool LoggedIn = false;
         public static PartY instance;
 
         /// <summary>
         /// IP for clients to connect to. Null if you are the server.
         /// </summary>
         public IPAddress serverIp;
+
+        public ulong clientID = 0;
         
         /// <summary>
         /// For Clients, there is only one and it's the connection to the server.
@@ -51,6 +56,16 @@ namespace PartY
         #region Unity Events
         public void Awake()
         {
+            //path = Application.persistentDataPath;
+            
+
+            //for(int i = 0; i < 5; i++)
+            //    path = path.Remove(path.Length - 1);
+
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            Debug.LogError(path);
+
             instance = this;
             SetServerStatus(false);
         }
@@ -58,21 +73,28 @@ namespace PartY
         public void ConnectToServer()
         {
             instance = this;
-            
+
             bool valid = false;
             IPAddress iP = new IPAddress(0);
 
             valid = IPAddress.TryParse(clientIpInput.text, out iP);
+
+            if (clientIpInput.text == "localhost")
+            {
+                valid = IPAddress.TryParse("127.0.0.1", out iP);
+            }
+
             serverIp = valid ? iP : null;
-            
+
             // Client protocal - try connecting to the server
-            if(!valid)
+            if (!valid)
             {
                 onFailedToConnect.Invoke();
                 return;
             }
 
             Debug.Log("Client starting...");
+            //Debug.Log("Saving to... " + Application.persistentDataPath);
             TcpClient client = new TcpClient();
             PartY_ConnectedClient connectedClient = new PartY_ConnectedClient(client);
             clientList.Add(connectedClient);
@@ -92,6 +114,31 @@ namespace PartY
             }
             else
             {
+                ReadToken();
+
+                if (clientID == 0)
+                {
+                    Debug.Log("Key was invalid, asking for a new one!");
+                    SendTextData("NeedTokenID," + new WebClient().DownloadString("http://icanhazip.com"));
+                }
+                else
+                {
+                    //ulong id_result;
+                    //bool didParse = ulong.TryParse(PlayerPrefs.GetString("ServerID"), out id_result);
+
+                    //if(didParse)
+                    //{
+                    //    SendTextData("Verify," + id_result);
+                    //}
+                    //else
+                    //{
+                    //    //Else, error, external modification of user ID, ask for new one.
+                    //    SendTextData("NeedTokenID");
+                    //}
+                    Debug.Log("Token was read, verifying with host!");
+                    SendTextData("Verify," + clientID);
+                }
+
                 SetServerStatus(true);
                 onSuccessfulConnection.Invoke();
             }
@@ -147,6 +194,49 @@ namespace PartY
         public static void SetServerStatus(bool status)
         {
             IsConnectedToServer = status;
+        }
+
+        public void ReadToken()
+        {
+            if (!File.Exists(PartY.path + "/PartY_Data/"))
+            {
+                // Create the file.
+                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/"))
+                {
+                }
+
+                Debug.Log("Generated a /PartY_Data/ folder");
+            }
+
+            if (!File.Exists(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            {
+                // Create the file.
+                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+                {
+                    Byte[] info =
+                        new UTF8Encoding(true).GetBytes("");
+
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+
+                Debug.Log("Generated a KeyDictionary.PartY file");
+            }
+
+            // Open the stream and read it back.
+            using (StreamReader sr = File.OpenText(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    ulong input;
+                    bool didParse = ulong.TryParse(s, out input);
+
+                    if (didParse)
+                        clientID = input;
+                    else Debug.Log("Error parsing " + s + " inside of the existing keys dictionary");
+                }
+            }
         }
         #endregion
     }

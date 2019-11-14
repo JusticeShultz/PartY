@@ -7,13 +7,22 @@ using System.Net;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using System.IO;
+using System.Text;
 
 namespace PartY
 {
+    public class Lobby
+    {
+        public PartY_ConnectedClient host;
+        public List<PartY_ConnectedClient> usersConnected = new List<PartY_ConnectedClient>();
+    }
+
     class Program
     {
         #region Data
+        public static List<ulong> existingKeys = new List<ulong>();
+
         public const int port = 27015;
 
         public static Program instance;
@@ -22,9 +31,12 @@ namespace PartY
 
         List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
 
-        TcpListener listener;
-        #endregion
+        List<Lobby> lobbytList = new List<Lobby>();
 
+        TcpListener listener;
+        
+        #endregion
+        
         #region Main Async Startup
         static void Main(string[] args)
         {
@@ -35,6 +47,12 @@ namespace PartY
 
         private async Task MainAsync()
         {
+            #region Key auth
+
+            ReadTokens();
+
+            #endregion
+
             instance = this;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnApplicationQuit);
 
@@ -72,6 +90,7 @@ namespace PartY
         void OnServerConnect(IAsyncResult ar)
         {
             TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
+            tcpClient.GetStream();
             clientList.Add(new PartY_ConnectedClient(tcpClient));
 
             listener.BeginAcceptTcpClient(OnServerConnect, null);
@@ -98,6 +117,68 @@ namespace PartY
                 PartY_ConnectedClient client = instance.clientList[i];
                 client.Send(message);
             }
+        }
+
+        public void ReadTokens()
+        {
+            if (!File.Exists("KeyDictionary.PartY"))
+            {
+                // Create the file.
+                using (FileStream fs = File.Create("KeyDictionary.PartY"))
+                {
+                    Byte[] info =
+                        new UTF8Encoding(true).GetBytes("");
+
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+
+                Console.WriteLine("Generated a KeyDictionary.PartY file");
+            }
+
+            // Open the stream and read it back.
+            using (StreamReader sr = File.OpenText("KeyDictionary.PartY"))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    ulong input;
+                    bool didParse = ulong.TryParse(s, out input);
+
+                    if (didParse)
+                        existingKeys.Add(input);
+                    else Console.WriteLine("Error parsing " + s + " inside of the existing keys dictionary");
+                }
+            }
+        }
+
+        public void RewriteTokens()
+        {
+            if (!File.Exists("KeyDictionary.PartY"))
+            {
+                // Create the file.
+                using (FileStream fs = File.Create("KeyDictionary.PartY"))
+                {
+                    Byte[] info =
+                        new UTF8Encoding(true).GetBytes("");
+
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+
+                Console.WriteLine("Generated a KeyDictionary.PartY file, didn't successfully write any data.");
+            }
+
+            // Open the stream and read it back.
+
+            string contents = "";
+
+            for(int i = 0; i < existingKeys.Count; i++)
+            {
+                contents += existingKeys[i].ToString() + Environment.NewLine;
+            }
+
+            File.WriteAllText("KeyDictionary.PartY", contents);
         }
         #endregion
     }
