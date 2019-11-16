@@ -32,7 +32,10 @@ namespace PartY
         {
             string externalip = new WebClient().DownloadString("http://icanhazip.com");
 
-            PartY.instance.SendTextData("Heartbeat from: " + externalip);
+            if (PartY.instance.host != null)
+            {
+                PartY.instance.SendTextData("Heartbeat from: " + externalip);
+            }
 
             print("Lobby updated");
         }

@@ -27,12 +27,19 @@ namespace PartY
         public IPAddress serverIp;
 
         public ulong clientID = 0;
-        
+
         /// <summary>
         /// For Clients, there is only one and it's the connection to the server.
         /// For Servers, there are many - one per connected client.
         /// </summary>
-        List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
+        //public List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
+
+        /// <summary>
+        /// The connection to the host.
+        /// </summary>
+        public PartY_ConnectedClient host = null;
+
+        public static PartY_ConnectedClient myConnection;
 
         /// <summary>
         /// Accepts new connections.  Null for clients.
@@ -44,9 +51,6 @@ namespace PartY
         public UnityEvent onSuccessfulConnection = new UnityEvent();
         public UnityEvent onFailedToConnect = new UnityEvent();
         public UnityEvent onDisconnect = new UnityEvent();
-
-        public List<Client> clients = new List<Client>();
-        public List<HostedLobby> lobbies = new List<HostedLobby>();
 
         private static bool ConnectionStatus = false;
 
@@ -64,7 +68,7 @@ namespace PartY
 
             path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            Debug.LogError(path);
+            //Debug.LogError(path);
 
             instance = this;
             SetServerStatus(false);
@@ -95,19 +99,19 @@ namespace PartY
 
             Debug.Log("Client starting...");
             //Debug.Log("Saving to... " + Application.persistentDataPath);
-            TcpClient client = new TcpClient();
-            PartY_ConnectedClient connectedClient = new PartY_ConnectedClient(client);
-            clientList.Add(connectedClient);
-            IAsyncResult result = client.BeginConnect(serverIp, PartY_Globals.port, (ar) => connectedClient.EndConnect(ar), null);
+            TcpClient host_connection = new TcpClient();
+            PartY_ConnectedClient connectedHost = new PartY_ConnectedClient(host_connection);
+            host = connectedHost;
+            IAsyncResult result = host_connection.BeginConnect(serverIp, PartY_Globals.port, (ar) => connectedHost.EndConnect(ar), null);
 
             while (!result.IsCompleted) { }
 
-            if (!client.Connected)
+            if (!host_connection.Connected)
                 Debug.Log("Client failed! :(");
             else
                 Debug.Log("Client connected! :)");
 
-            if (!client.Connected)
+            if (!host_connection.Connected)
             {
                 SetServerStatus(false);
                 onFailedToConnect.Invoke();
@@ -150,10 +154,12 @@ namespace PartY
 
             listener?.Stop();
 
-            for (int i = 0; i < clientList.Count; i++)
-            {
-                clientList[i].Close();
-            }
+            //for (int i = 0; i < clientList.Count; i++)
+            //{
+            //    clientList[i].Close();
+            //}
+
+            host.Close();
         }
 
         #endregion
@@ -162,7 +168,9 @@ namespace PartY
         void OnServerConnect(IAsyncResult ar)
         {
             TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
-            clientList.Add(new PartY_ConnectedClient(tcpClient));
+            myConnection = new PartY_ConnectedClient(tcpClient);
+            //clientList.Add(myConnection);
+            //host = myConnection;
             listener.BeginAcceptTcpClient(OnServerConnect, null);
             SetServerStatus(true);
         }
@@ -174,21 +182,24 @@ namespace PartY
             SetServerStatus(false);
             listener?.Stop();
             onDisconnect.Invoke();
-            clientList.Remove(client);
+            //clientList.Remove(client);
         }
 
-        internal void SendTextData(string message)
+        public void SendTextData(string message)
         {
             BroadcastTextMessage(message);
         }
 
-        internal static void BroadcastTextMessage(string message)
+        internal void BroadcastTextMessage(string message)
         {
-            for (int i = 0; i < instance.clientList.Count; i++)
-            {
-                PartY_ConnectedClient client = instance.clientList[i];
-                client.SendTextData(message);
-            }
+            //for (int i = 0; i < instance.clientList.Count; i++)
+            //{
+            //    PartY_ConnectedClient client = instance.clientList[i];
+            //    client.SendTextData(message);
+            //}
+
+            Debug.Assert(instance.host.stream.CanWrite, "Host is not writable!");
+            instance.host.SendTextData(message);
         }
 
         public static void SetServerStatus(bool status)
@@ -198,20 +209,10 @@ namespace PartY
 
         public void ReadToken()
         {
-            if (!File.Exists(PartY.path + "/PartY_Data/"))
+            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/"))
-                {
-                }
-
-                Debug.Log("Generated a /PartY_Data/ folder");
-            }
-
-            if (!File.Exists(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
-            {
-                // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -224,7 +225,7 @@ namespace PartY
             }
 
             // Open the stream and read it back.
-            using (StreamReader sr = File.OpenText(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary.PartY"))
             {
                 string s = "";
                 while ((s = sr.ReadLine()) != null)

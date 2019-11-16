@@ -23,7 +23,7 @@ namespace PartY
 
         readonly byte[] readBuffer = new byte[5000];
 
-        NetworkStream stream
+        public NetworkStream stream
         {
             get
             {
@@ -38,6 +38,7 @@ namespace PartY
         public PartY_ConnectedClient(TcpClient tcpClient)
         {
             this.connection = tcpClient;
+            PartY.myConnection = this;
             this.connection.NoDelay = true; // Disable Nagle's cache algorithm
         }
 
@@ -91,6 +92,32 @@ namespace PartY
                         if(parsed)
                             Debug.Log("ID established! Connection successful");
                         else Debug.Log("Something wen't wrong trying to parse the ID the host sent...");
+                    }
+                    else if (parser[0] == "Verified")
+                    {
+                        Debug.Log("Logged in with ID successfully! Now fully connected.");
+                        PartY.LoggedIn = true;
+                    }
+                    else if (parser[0] == "NewLobby")
+                    {
+                        Debug.Log("New lobby added to the lobby pool.");
+                        LobbyHandler.lobbies.Add(new LobbyHandler.Lobby(parser[1]));
+                        LobbyHandler.instance.RecreateLobbyUI();
+                    }
+                    else if (parser[0] == "CloseLobby")
+                    {
+                        Debug.Log("Removed a lobby from the lobby pool.");
+
+                        for (int i = 0; i < LobbyHandler.lobbies.Count; i++)
+                        {
+                            if(LobbyHandler.lobbies[i].ownerUsername == parser[1])
+                            {
+                                LobbyHandler.lobbies.Remove(LobbyHandler.lobbies[i]);
+                                break;
+                            }
+                        }
+
+                        LobbyHandler.instance.RecreateLobbyUI();
                     }
                 }
             }
@@ -167,10 +194,10 @@ namespace PartY
 
         public void ReadToken()
         {
-            if (!File.Exists(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -183,7 +210,7 @@ namespace PartY
             }
 
             // Open the stream and read it back.
-            using (StreamReader sr = File.OpenText(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary.PartY"))
             {
                 string s = "";
                 while ((s = sr.ReadLine()) != null)
@@ -200,10 +227,10 @@ namespace PartY
 
         public void WriteToken(string token)
         {
-            if (!File.Exists(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/PartY_Data/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -217,7 +244,7 @@ namespace PartY
 
             // Open the stream and read it back.
 
-            File.WriteAllText(PartY.path + "/PartY_Data/KeyDictionary.PartY", token);
+            File.WriteAllText(PartY.path + "/KeyDictionary.PartY", token);
         }
         #endregion
     }

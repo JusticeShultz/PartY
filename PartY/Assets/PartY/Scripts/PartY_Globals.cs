@@ -12,13 +12,10 @@ namespace PartY
     public class Client
     {
         string username { get; set; }
-        IPAddress userAddress { get; set; }
     }
 
     public class HostedLobby
     {
         public string hostsName { get; set; }
-        public IPAddress hostIP { get; set; }
-        public List<Client> joiners { get; set; }
     }
 }

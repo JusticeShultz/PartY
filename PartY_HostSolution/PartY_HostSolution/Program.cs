@@ -12,10 +12,32 @@ using System.Text;
 
 namespace PartY
 {
+    public class User
+    {
+        public PartY_ConnectedClient clientConnection;
+        public string username;
+
+        public User(PartY_ConnectedClient cConnection, string userName)
+        {
+            clientConnection = cConnection;
+            username = userName;
+        }
+    }
+
     public class Lobby
     {
-        public PartY_ConnectedClient host;
-        public List<PartY_ConnectedClient> usersConnected = new List<PartY_ConnectedClient>();
+        public User host;
+        public List<User> usersConnected = new List<User>();
+
+        public Lobby()
+        {
+
+        }
+
+        public Lobby(User _host)
+        {
+            host = _host;
+        }
     }
 
     class Program
@@ -29,9 +51,9 @@ namespace PartY
 
         public IPAddress serverIp;
 
-        List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
+        public List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
 
-        List<Lobby> lobbytList = new List<Lobby>();
+        public List<Lobby> lobbyList = new List<Lobby>();
 
         TcpListener listener;
         
@@ -140,6 +162,9 @@ namespace PartY
             using (StreamReader sr = File.OpenText("KeyDictionary.PartY"))
             {
                 string s = "";
+
+                existingKeys = new List<ulong>();
+
                 while ((s = sr.ReadLine()) != null)
                 {
                     ulong input;

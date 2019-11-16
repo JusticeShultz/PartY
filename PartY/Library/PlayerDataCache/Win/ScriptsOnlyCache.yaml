@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - LobbyData
     - LobbyHandler
     - PartY.AutoUpdateLobby
     - PartY.PartY
@@ -46,37 +47,39 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9792}
+      Script: {instanceID: 9670}
     - Class: 114
-      Script: {instanceID: 9940}
+      Script: {instanceID: 9716}
     - Class: 114
-      Script: {instanceID: 9942}
+      Script: {instanceID: 9822}
     - Class: 114
-      Script: {instanceID: 9980}
+      Script: {instanceID: 9824}
     - Class: 114
-      Script: {instanceID: 10262}
+      Script: {instanceID: 9862}
     - Class: 114
-      Script: {instanceID: 10284}
+      Script: {instanceID: 9882}
     - Class: 114
-      Script: {instanceID: 10346}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10508}
+      Script: {instanceID: 10172}
     - Class: 114
-      Script: {instanceID: 10680}
+      Script: {instanceID: 10224}
     - Class: 114
-      Script: {instanceID: 10860}
+      Script: {instanceID: 10236}
     - Class: 114
-      Script: {instanceID: 11118}
+      Script: {instanceID: 10358}
     - Class: 114
-      Script: {instanceID: 11406}
+      Script: {instanceID: 10404}
     - Class: 114
-      Script: {instanceID: 11458}
+      Script: {instanceID: 10578}
     - Class: 114
-      Script: {instanceID: 152442}
+      Script: {instanceID: 10762}
     - Class: 114
-      Script: {instanceID: 202524}
+      Script: {instanceID: 11020}
     - Class: 114
-      Script: {instanceID: 240588}
+      Script: {instanceID: 11308}
+    - Class: 114
+      Script: {instanceID: 11360}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -116,6 +119,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 56402ef488250e7d7031b11532c38a18
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LobbyData
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -170,6 +179,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: aee60f70881a895b78cbff531fe3e45b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PartY
+    className: PartY
   - hash:
       serializedVersion: 2
       Hash: 234235b9fb07320d11497e08a726cc56
@@ -244,10 +259,22 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: caf4b53c46fef3d94cde660193a23335
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PartY
+    className: Client_PlayerController
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: a4f3642b3d6579122109b5d5e16f7eac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PartY
+    className: AutoUpdateLobby
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -278,6 +305,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: 67da2cca08de8465697adc96b5029c5b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LobbyHandler
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
@@ -506,25 +539,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 36207b1c46b35da75318f390470cbf5b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: LobbyHandler
-  - hash:
-      serializedVersion: 2
-      Hash: a4f3642b3d6579122109b5d5e16f7eac
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: PartY
-    className: AutoUpdateLobby
-  - hash:
-      serializedVersion: 2
-      Hash: ec81d19c0ef0ca8844fb6d18f32e7dba
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: PartY
-    className: PartY
   platform: 5
   scenePathNames:
   - Assets/PartY/Demo/Scenes/ClientMenu.unity
-  playerPath: C:/Users/s189081/Desktop/ClientTest/PartY.exe
+  playerPath: C:/Users/s189081/Desktop/PartY_TestEnv/PartY.exe
