@@ -66,6 +66,7 @@
     <Compile Include="Assets\PartY\Scripts\AutoUpdateLobby.cs" />
     <Compile Include="Assets\PartY\Scripts\LobbyData.cs" />
     <Compile Include="Assets\PartY\Scripts\LobbyHandler.cs" />
+    <Compile Include="Assets\PartY\Scripts\LobbySpawner.cs" />
     <Compile Include="Assets\PartY\Scripts\PartY.cs" />
     <Compile Include="Assets\PartY\Scripts\PartY_ConnectedClient.cs" />
     <Compile Include="Assets\PartY\Scripts\PartY_Globals.cs" />

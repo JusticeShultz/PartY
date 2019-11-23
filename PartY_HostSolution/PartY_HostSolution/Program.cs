@@ -111,11 +111,18 @@ namespace PartY
         #region Async Events
         void OnServerConnect(IAsyncResult ar)
         {
-            TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
-            tcpClient.GetStream();
-            clientList.Add(new PartY_ConnectedClient(tcpClient));
+            try
+            {
+                TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
+                tcpClient.GetStream();
+                clientList.Add(new PartY_ConnectedClient(tcpClient));
 
-            listener.BeginAcceptTcpClient(OnServerConnect, null);
+                listener.BeginAcceptTcpClient(OnServerConnect, null);
+            }
+            catch (System.ObjectDisposedException)
+            {
+                return;
+            }
         }
         #endregion
 

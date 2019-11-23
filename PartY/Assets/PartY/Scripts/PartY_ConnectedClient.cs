@@ -69,6 +69,8 @@ namespace PartY
 
             Debug.Log(newMessage);
 
+            stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+
             if (newMessage.Contains(","))
             {
                 string[] parser = newMessage.Split(',');
@@ -89,14 +91,17 @@ namespace PartY
 
                         bool parsed = ulong.TryParse(parser[1], out userID);
 
-                        if(parsed)
+                        if (parsed)
+                        {
+                            PartY.loggedIn = true;
                             Debug.Log("ID established! Connection successful");
+                        }
                         else Debug.Log("Something wen't wrong trying to parse the ID the host sent...");
                     }
                     else if (parser[0] == "Verified")
                     {
                         Debug.Log("Logged in with ID successfully! Now fully connected.");
-                        PartY.LoggedIn = true;
+                        PartY.loggedIn = true;
                     }
                     else if (parser[0] == "NewLobby")
                     {
@@ -110,21 +115,165 @@ namespace PartY
 
                         for (int i = 0; i < LobbyHandler.lobbies.Count; i++)
                         {
-                            if(LobbyHandler.lobbies[i].ownerUsername == parser[1])
+                            if (LobbyHandler.lobbies[i].ownerUsername == parser[1])
                             {
                                 LobbyHandler.lobbies.Remove(LobbyHandler.lobbies[i]);
                                 break;
                             }
                         }
 
+                        if(LobbyHandler.myLobby.ownerUsername == parser[1])
+                        {
+                            LobbySpawner.hostClosed = true;
+                            LobbySpawner.leaveLobby = true;
+                        }
+
                         LobbyHandler.instance.RecreateLobbyUI();
                     }
+                    else if (parser[0] == "Lobbies")
+                    {
+                        Debug.Log("Got all active lobbies.");
+
+                        LobbyHandler.lobbies = new List<LobbyHandler.Lobby>();
+
+                        for (int i = 1; i < parser.Length; i++)
+                        {
+                            if (parser.Length == 1) break;
+
+                            LobbyHandler.lobbies.Add(new LobbyHandler.Lobby(parser[i]));
+                        }
+
+                        LobbyHandler.instance.RecreateLobbyUI();
+                    }
+                    else if (parser[0] == "LobbyJoiner")
+                    {
+                        Debug.Log(parser[2] + " joined " + parser[1] + "'s lobby");
+                        
+                        for (int i = 0; i < LobbyHandler.lobbies.Count; i++)
+                        {
+                            if (LobbyHandler.lobbies[i].ownerUsername == parser[1])
+                            {
+                                LobbyHandler.lobbies[i].lobbySize += 1;
+                                LobbyHandler.lobbies[i].clients.Add(parser[2]);
+
+                                if(LobbyHandler.myLobby != null)
+                                {
+                                    if(LobbyHandler.myLobby.ownerUsername == parser[1])
+                                    {
+                                        LobbyHandler.myLobby.clients.Add(parser[2]);
+
+                                        if (LobbyHandler.instance.usernameField.text == parser[1])
+                                            LobbySpawner.updateHostedLobby = true;
+                                        else LobbySpawner.updateJoinedLobby = true;
+                                    }
+                                }
+
+                                break;
+                            }
+                        }
+
+                        LobbyHandler.instance.RecreateLobbyUI();
+                    }
+                    else if (parser[0] == "LobbyLeaver")
+                    {
+                        Debug.Log(parser[2] + " left " + parser[1] + "'s lobby");
+
+                        for (int i = 0; i < LobbyHandler.lobbies.Count; i++)
+                        {
+                            if (LobbyHandler.lobbies[i].ownerUsername == parser[1])
+                            {
+                                LobbyHandler.lobbies[i].lobbySize -= 1;
+
+                                for (int z = 0; z < LobbyHandler.lobbies[i].clients.Count; z++)
+                                {
+                                    if (LobbyHandler.lobbies[i].clients[z] == parser[2])
+                                    {
+                                        LobbyHandler.lobbies[i].clients.Remove(LobbyHandler.lobbies[i].clients[z]);
+                                    }
+                                }
+                            }
+
+                            if (LobbyHandler.myLobby != null)
+                            {
+                                if (LobbyHandler.myLobby.ownerUsername == parser[1])
+                                {
+                                    for (int z = 0; z < LobbyHandler.myLobby.clients.Count; z++)
+                                    {
+                                        if (LobbyHandler.myLobby.clients[z] == parser[2])
+                                        {
+                                            LobbyHandler.myLobby.clients.Remove(LobbyHandler.myLobby.clients[z]);
+                                        }
+                                    }
+
+                                    if (LobbyHandler.instance.usernameField.text == parser[1])
+                                        LobbySpawner.updateHostedLobby = true;
+                                    else LobbySpawner.updateJoinedLobby = true;
+                                }
+                            }
+                        }
+
+                        LobbyHandler.instance.RecreateLobbyUI();
+                    }
+                    else if (parser[0] == "InvalidLobby")
+                    {
+                        Debug.LogWarning("Invalid lobby!");
+                        LobbyHandler.joining = false;
+                    }
+                    else if (parser[0] == "FailedToLeave")
+                    {
+                        Debug.LogWarning("Failed to leave lobby!");
+                    }
+                    else if (parser[0] == "LobbyJoined")
+                    {
+                        Debug.Log("Successfully joined the lobby!");
+                        LobbyHandler.instance.JoinedLobby();
+                        LobbySpawner.updateJoinedLobby = true;
+                        LobbyHandler.joining = false;
+                    }
+                    else if (parser[0] == "LobbyLeft")
+                    {
+                        Debug.Log("Successfully left the lobby!");
+                        LobbyHandler.instance.LeftLobby();
+                    }
+                    else if (parser[0] == "LobbyInfo")
+                    {
+                        if (LobbyHandler.myLobby != null)
+                        {
+                            Debug.Log("Got info about current joined lobby");
+
+                            //Flush out old client data.
+                            LobbyHandler.myLobby.clients = new List<string>();
+                            
+                            for(int i = 1; i < parser.Length; i++)
+                            {
+                                LobbyHandler.myLobby.clients.Add(parser[i]);
+                            }
+
+                            LobbyHandler.instance.RecreateLobbyUI();
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Tried to get info about current joined lobby, but you weren't detected in a lobby!");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (newMessage == "DuplicateUsername")
+                {
+                    Debug.Log("Using a duplicate username, aborting lobby creation...");
+
+                    LobbyHandler.instance._Menu.SetActive(true);
+                    LobbyHandler.instance._HostedLobby.SetActive(false);
+                    LobbyHandler.instance._JoinedLobby.SetActive(false);
+                    LobbyHandler.instance.duplicateUsername.SetActive(false);
                 }
             }
 
             //PartY.messageToDisplay += newMessage + Environment.NewLine;
 
-            stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+            //stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
         }
 
         internal void EndConnect(IAsyncResult ar)
@@ -194,10 +343,10 @@ namespace PartY
 
         public void ReadToken()
         {
-            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
+            if (!File.Exists(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -210,7 +359,7 @@ namespace PartY
             }
 
             // Open the stream and read it back.
-            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary.PartY"))
+            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
             {
                 string s = "";
                 while ((s = sr.ReadLine()) != null)
@@ -227,10 +376,10 @@ namespace PartY
 
         public void WriteToken(string token)
         {
-            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
+            if (!File.Exists(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -244,7 +393,7 @@ namespace PartY
 
             // Open the stream and read it back.
 
-            File.WriteAllText(PartY.path + "/KeyDictionary.PartY", token);
+            File.WriteAllText(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY", token);
         }
         #endregion
     }

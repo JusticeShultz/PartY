@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - LobbyData
     - LobbyHandler
     - PartY.AutoUpdateLobby
+    - PartY.LobbySpawner
     - PartY.PartY
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
@@ -80,6 +81,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11308}
     - Class: 114
       Script: {instanceID: 11360}
+    - Class: 114
+      Script: {instanceID: 70406}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -181,7 +184,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: aee60f70881a895b78cbff531fe3e45b
+      Hash: de64978b0717b3686b54614067b7df3f
     assemblyName: Assembly-CSharp.dll
     namespaceName: PartY
     className: PartY
@@ -307,7 +310,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 67da2cca08de8465697adc96b5029c5b
+      Hash: 48709f423fbc63e60f29a6788950f5eb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyHandler
@@ -539,7 +542,13 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: cd2bcbe0fa282fd686b26b60a6c3386c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PartY
+    className: LobbySpawner
   platform: 5
   scenePathNames:
   - Assets/PartY/Demo/Scenes/ClientMenu.unity
-  playerPath: C:/Users/s189081/Desktop/PartY_TestEnv/PartY.exe
+  playerPath: C:/Users/s189081/Desktop/ClientTest00/PartY.exe

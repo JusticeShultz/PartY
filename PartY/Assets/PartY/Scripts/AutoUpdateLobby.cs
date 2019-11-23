@@ -37,7 +37,19 @@ namespace PartY
                 PartY.instance.SendTextData("Heartbeat from: " + externalip);
             }
 
-            print("Lobby updated");
+            if (LobbyHandler.myLobby != null)
+            {
+                if (LobbyHandler.instance.usernameField.text == LobbyHandler.myLobby.ownerUsername)
+                {
+                    LobbySpawner.updateHostedLobby = true;
+                }
+                else
+                {
+                    LobbySpawner.updateJoinedLobby = true;
+                }
+            }
+
+            //print("Lobby updated");
         }
     }
 }

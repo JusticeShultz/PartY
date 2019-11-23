@@ -24,7 +24,14 @@ namespace PartY
         {
             get
             {
-                return connection.GetStream();
+                try
+                {
+                    return connection.GetStream();
+                }
+                catch (System.InvalidOperationException)
+                {
+                    return null;
+                }
             }
         }
         #endregion
@@ -34,7 +41,16 @@ namespace PartY
         {
             this.connection = tcpClient;
             this.connection.NoDelay = true; // Disable Nagle's cache algorithm
-            stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+
+            try
+            {
+                stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.IO.IOException || ex is System.NullReferenceException)
+                    return;
+            }
         }
 
         internal void Close()
@@ -46,7 +62,18 @@ namespace PartY
         #region Async Events
         void OnRead(IAsyncResult ar)
         {
-            int length = stream.EndRead(ar);
+            int length = 0;
+
+            try
+            {
+                length = stream.EndRead(ar);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.IO.IOException || ex is System.NullReferenceException)
+                    return;
+            }
+
             if (length <= 0)
             { // Connection closed
                 Program.instance.OnDisconnect(this);
@@ -54,6 +81,16 @@ namespace PartY
             }
 
             string newMessage = System.Text.Encoding.UTF8.GetString(readBuffer, 0, length);
+
+            try
+            {
+                stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.IO.IOException || ex is System.NullReferenceException)
+                    return;
+            }
 
             //Console.WriteLine(newMessage);
 
@@ -72,7 +109,7 @@ namespace PartY
                         ulong key;
                         bool parsed = ulong.TryParse(parser[1], out key);
 
-                        if(!parsed)
+                        if (!parsed)
                         {
                             Console.WriteLine("Error parsing key, could not verify");
                         }
@@ -108,11 +145,11 @@ namespace PartY
                         ulong key;
                         bool parsed = ulong.TryParse(parser[2], out key);
 
-                        if(parsed)
+                        if (parsed)
                         {
                             for (int i = 0; i < Program.instance.clientList.Count; i++)
                             {
-                                if(Program.instance.clientList[i].userID == key)
+                                if (Program.instance.clientList[i].userID == key)
                                 {
                                     clientConnection = Program.instance.clientList[i];
                                     break;
@@ -120,7 +157,21 @@ namespace PartY
                             }
                         }
 
-                        if (clientConnection == null) return;
+                        if (clientConnection == null)
+                        {
+                            return;
+                        }
+
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        {
+                            if (Program.instance.lobbyList[i].host.username == parser[1])
+                            {
+                                byte[] buffer = System.Text.Encoding.UTF8.GetBytes("DuplicateUsername");
+                                stream.Write(buffer, 0, buffer.Length);
+
+                                return;
+                            }
+                        }
 
                         //Tell everyone there is a PartY! :D
                         for (int i = 0; i < Program.instance.clientList.Count; i++)
@@ -152,7 +203,10 @@ namespace PartY
                             }
                         }
 
-                        if (clientConnection == null) return;
+                        if (clientConnection == null)
+                        {
+                            return;
+                        }
 
                         //Tell everyone the PartY is over :(
                         for (int i = 0; i < Program.instance.clientList.Count; i++)
@@ -160,7 +214,7 @@ namespace PartY
                             Program.instance.clientList[i].Send("CloseLobby," + parser[1]);
                         }
 
-                        for(int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
                         {
                             if (Program.instance.lobbyList[i].host.username == parser[1])
                             {
@@ -172,60 +226,188 @@ namespace PartY
                     }
                     else if (parser[0] == "JoinLobby")
                     {
-                        Console.WriteLine(parser[1] + " attempted to join lobby #" + parser[1] + ".");
+                        Console.WriteLine(parser[2] + " attempted to join " + parser[1] + "'s lobby");
 
-                        //PartY_ConnectedClient clientConnection = null;
+                        PartY_ConnectedClient clientConnection = null;
 
-                        //ulong key;
-                        //bool parsed = ulong.TryParse(parser[2], out key);
+                        ulong key;
+                        bool parsed = ulong.TryParse(parser[3], out key);
 
-                        //if (parsed)
-                        //{
-                        //    for (int i = 0; i < Program.instance.clientList.Count; i++)
-                        //    {
-                        //        if (Program.instance.clientList[i].userID == key)
-                        //        {
-                        //            clientConnection = Program.instance.clientList[i];
-                        //            break;
-                        //        }
-                        //    }
-                        //}
+                        if (parsed)
+                        {
+                            for (int i = 0; i < Program.instance.clientList.Count; i++)
+                            {
+                                if (Program.instance.clientList[i].userID == key)
+                                {
+                                    clientConnection = Program.instance.clientList[i];
+                                    break;
+                                }
+                            }
+                        }
 
-                        //if (clientConnection == null) return;
+                        if (clientConnection == null)
+                        {
+                            return;
+                        }
 
-                        ////Tell everyone the PartY is over :(
-                        //for (int i = 0; i < Program.instance.clientList.Count; i++)
-                        //{
-                        //    Program.instance.clientList[i].Send("CloseLobby," + parser[1]);
-                        //}
+                        bool joined = false;
 
-                        //for (int i = 0; i < Program.instance.lobbyList.Count; i++)
-                        //{
-                        //    if (Program.instance.lobbyList[i].host.username == parser[1])
-                        //    {
-                        //        Program.instance.lobbyList.Remove(Program.instance.lobbyList[i]);
-                        //        Console.WriteLine(parser[1] + " attempted to join lobby #" + parser[1] + ".");
-                        //        break;
-                        //    }
-                        //}
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        {
+                            if (parser[1] == Program.instance.lobbyList[i].host.username)
+                            {
+                                Program.instance.lobbyList[i].usersConnected.Add(new User(clientConnection, parser[2]));
+                                joined = true;
+                                break;
+                            }
+                        }
+
+                        if (!joined)
+                        {
+                            byte[] bufferaa = System.Text.Encoding.UTF8.GetBytes("InvalidLobby,SadTimes");
+                            stream.Write(bufferaa, 0, bufferaa.Length);
+
+                            Console.WriteLine(parser[2] + " failed to join " + parser[1] + "'s lobby");
+                        }
+                        else
+                        {
+                            byte[] buffera = System.Text.Encoding.UTF8.GetBytes("LobbyJoined,HappyTimes");
+                            stream.Write(buffera, 0, buffera.Length);
+
+                            for (int i = 0; i < Program.instance.clientList.Count; i++)
+                            {
+                                Program.instance.clientList[i].Send("LobbyJoiner," + parser[1] + "," + parser[2]);
+                            }
+
+                            Console.WriteLine(parser[2] + " successfully joined " + parser[1] + "'s lobby");
+                        }
                     }
+                    else if (parser[0] == "LeaveLobby")
+                    {
+                        Console.WriteLine(parser[2] + " attempted to leave " + parser[1] + "'s lobby");
+
+                        PartY_ConnectedClient clientConnection = null;
+
+                        ulong key;
+                        bool parsed = ulong.TryParse(parser[3], out key);
+
+                        if (parsed)
+                        {
+                            for (int i = 0; i < Program.instance.clientList.Count; i++)
+                            {
+                                if (Program.instance.clientList[i].userID == key)
+                                {
+                                    clientConnection = Program.instance.clientList[i];
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (clientConnection == null)
+                        {
+                            return;
+                        }
+
+                        bool left = false;
+
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        {
+                            if (left) break;
+
+                            for (int a = 0; a < Program.instance.lobbyList[i].usersConnected.Count; a++)
+                            {
+                                if (Program.instance.lobbyList[i].usersConnected[a].username == parser[2])
+                                {
+                                    Program.instance.lobbyList[i].usersConnected.Remove(Program.instance.lobbyList[i].usersConnected[a]);
+                                    left = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!left)
+                        {
+                            //There's no escape off the PartY train >:)
+                            byte[] buffer = System.Text.Encoding.UTF8.GetBytes("FailedToLeave,UhOh");
+                            stream.Write(buffer, 0, buffer.Length);
+                        }
+                        else
+                        {
+                            byte[] buffer = System.Text.Encoding.UTF8.GetBytes("LobbyLeft,SadTimes");
+                            stream.Write(buffer, 0, buffer.Length);
+
+                            for (int i = 0; i < Program.instance.clientList.Count; i++)
+                            {
+                                Program.instance.clientList[i].Send("LobbyLeaver," + parser[1] + "," + parser[2]);
+                            }
+
+                            Console.WriteLine(parser[2] + " successfully left " + parser[1] + "'s lobby");
+                        }
+                    }
+                    else if (parser[0] == "GetLobbyData")
+                    {
+                        string joiners = "";
+
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        {
+                            if (Program.instance.lobbyList[i].host.username == parser[1])
+                            {
+                                for (int z = 0; z < Program.instance.lobbyList[i].usersConnected.Count; z++)
+                                {
+                                    if (z == Program.instance.lobbyList[i].usersConnected.Count - 1)
+                                        joiners += Program.instance.lobbyList[i].usersConnected[z].username;
+                                    else joiners += Program.instance.lobbyList[i].usersConnected[z].username + ",";
+                                }
+
+                                break;
+                            }
+                        }
+
+                        byte[] buffer = System.Text.Encoding.UTF8.GetBytes("LobbyInfo," + joiners);
+                        stream.Write(buffer, 0, buffer.Length);
+                    }
+
                 }
             }
             else
             {
                 Console.WriteLine(DateTime.Now + ")> " + newMessage);
 
-                Program.BroadcastChatMessage(newMessage);
+                //Program.BroadcastChatMessage(newMessage);
+
+                if (Program.instance.lobbyList.Count > 0 && newMessage.Contains("Heartbeat"))
+                {
+                    string lobbies = "";
+
+                    for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                    {
+                        if (i == Program.instance.lobbyList.Count - 1)
+                        {
+                            lobbies += Program.instance.lobbyList[i].host.username;
+                        }
+                        else lobbies += Program.instance.lobbyList[i].host.username + ",";
+                    }
+
+                    byte[] buffer = System.Text.Encoding.UTF8.GetBytes("Lobbies," + lobbies);
+                    stream.Write(buffer, 0, buffer.Length);
+                }
+                else Program.BroadcastChatMessage(newMessage);
             }
-            
-            stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
         }
 
         internal void EndConnect(IAsyncResult ar)
         {
             connection.EndConnect(ar);
 
-            stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+            try
+            {
+                stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.IO.IOException || ex is System.NullReferenceException)
+                    return;
+            }
         }
         #endregion
 
@@ -236,7 +418,15 @@ namespace PartY
 
             string val = System.Text.Encoding.UTF8.GetString(buffer);
 
-            stream.Write(buffer, 0, buffer.Length);
+            try
+            {
+                stream.Write(buffer, 0, buffer.Length);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.NullReferenceException || ex is System.IO.IOException)
+                    return;
+            }
         }
 
         public void SendAPIKey()

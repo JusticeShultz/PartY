@@ -386,15 +386,9 @@ C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\System.Xml.XmlDocument.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\System.Xml.XmlSerializer.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\System.Xml.XPath.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\System.Xml.XPath.XDocument.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.CollabProxy.Editor.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.Rider.Editor.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.TextMeshPro.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.Timeline.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.Timeline.Editor.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\Unity.VSCode.Editor.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\UnityEditor.dll
-C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\UnityEditor.UI.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\UnityEngine.AccessibilityModule.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\UnityEngine.AIModule.dll
 C:\Users\s189081\Desktop\PartY\PartY\Temp\bin\Debug\UnityEngine.AndroidJNIModule.dll

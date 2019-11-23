@@ -18,13 +18,15 @@ namespace PartY
     {
         #region Data
         public static string path;
-        public static bool LoggedIn = false;
+        public static bool loggedIn = false;
         public static PartY instance;
 
         /// <summary>
         /// IP for clients to connect to. Null if you are the server.
         /// </summary>
         public IPAddress serverIp;
+
+        public InputField clientVariant;
 
         public ulong clientID = 0;
 
@@ -153,13 +155,7 @@ namespace PartY
             SetServerStatus(false);
 
             listener?.Stop();
-
-            //for (int i = 0; i < clientList.Count; i++)
-            //{
-            //    clientList[i].Close();
-            //}
-
-            host.Close();
+            host?.Close();
         }
 
         #endregion
@@ -198,7 +194,7 @@ namespace PartY
             //    client.SendTextData(message);
             //}
 
-            Debug.Assert(instance.host.stream.CanWrite, "Host is not writable!");
+            //Debug.Assert(instance.host.stream.CanWrite, "Host is not writable!");
             instance.host.SendTextData(message);
         }
 
@@ -209,10 +205,10 @@ namespace PartY
 
         public void ReadToken()
         {
-            if (!File.Exists(PartY.path + "/KeyDictionary.PartY"))
+            if (!File.Exists(PartY.path + "/KeyDictionary" + clientVariant.text + ".PartY"))
             {
                 // Create the file.
-                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary.PartY"))
+                using (FileStream fs = File.Create(PartY.path + "/KeyDictionary" + clientVariant.text + ".PartY"))
                 {
                     Byte[] info =
                         new UTF8Encoding(true).GetBytes("");
@@ -225,7 +221,7 @@ namespace PartY
             }
 
             // Open the stream and read it back.
-            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary.PartY"))
+            using (StreamReader sr = File.OpenText(PartY.path + "/KeyDictionary" + clientVariant.text + ".PartY"))
             {
                 string s = "";
                 while ((s = sr.ReadLine()) != null)
