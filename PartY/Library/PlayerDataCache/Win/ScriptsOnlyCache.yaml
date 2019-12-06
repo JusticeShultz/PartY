@@ -1,9 +1,15 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - CharacterRepresentation
+    - GameHandler
+    - KinematicCharacterController.Examples.ExampleCharacterCamera
+    - KinematicCharacterController.Examples.ExampleCharacterController
+    - KinematicCharacterController.Examples.ExamplePlayer
+    - KinematicCharacterController.KinematicCharacterMotor
     - LobbyData
-    - LobbyHandler
     - PartY.AutoUpdateLobby
+    - PartY.LobbyHandler
     - PartY.LobbySpawner
     - PartY.PartY
     UnityEditor.Graphs.dll:
@@ -39,13 +45,27 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 21
       Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
     - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 102
+      Script: {instanceID: 0}
     - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 9670}
@@ -72,20 +92,34 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10404}
     - Class: 114
-      Script: {instanceID: 10578}
+      Script: {instanceID: 10516}
     - Class: 114
-      Script: {instanceID: 10762}
+      Script: {instanceID: 10580}
     - Class: 114
-      Script: {instanceID: 11020}
+      Script: {instanceID: 10764}
     - Class: 114
-      Script: {instanceID: 11308}
+      Script: {instanceID: 11022}
     - Class: 114
-      Script: {instanceID: 11360}
+      Script: {instanceID: 11310}
     - Class: 114
-      Script: {instanceID: 70406}
+      Script: {instanceID: 11362}
+    - Class: 114
+      Script: {instanceID: 118514}
+    - Class: 114
+      Script: {instanceID: 200656}
+    - Class: 114
+      Script: {instanceID: 200726}
+    - Class: 114
+      Script: {instanceID: 200748}
+    - Class: 114
+      Script: {instanceID: 200756}
+    - Class: 114
+      Script: {instanceID: 276810}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
+      Script: {instanceID: 0}
+    - Class: 136
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -262,12 +296,6 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: caf4b53c46fef3d94cde660193a23335
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: PartY
-    className: Client_PlayerController
-  - hash:
-      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -310,9 +338,9 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 48709f423fbc63e60f29a6788950f5eb
+      Hash: f266d9a18124f7eb037d0deb91387e06
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
+    namespaceName: PartY
     className: LobbyHandler
   - hash:
       serializedVersion: 2
@@ -344,6 +372,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: cd2bcbe0fa282fd686b26b60a6c3386c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: PartY
+    className: LobbySpawner
   - hash:
       serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
@@ -544,10 +578,106 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: cd2bcbe0fa282fd686b26b60a6c3386c
+      Hash: e18a8869e55feb855ab200011c5d8e8a
     assemblyName: Assembly-CSharp.dll
-    namespaceName: PartY
-    className: LobbySpawner
+    namespaceName: 
+    className: GameHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 19f67f2e0407c578ae3bef099bed1643
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PlayableMover
+  - hash:
+      serializedVersion: 2
+      Hash: a6e60361775622f2904dc3d2ac9b1962
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: OrbitCamera
+  - hash:
+      serializedVersion: 2
+      Hash: 59636662ec2341328ac1dab92db4c32d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: Teleporter
+  - hash:
+      serializedVersion: 2
+      Hash: ddfa15630085716d8a0c1e79a6f48ce7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleMovingPlatform
+  - hash:
+      serializedVersion: 2
+      Hash: d70689c2eef12888ba1fd597faaf89e6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExamplePlayer
+  - hash:
+      serializedVersion: 2
+      Hash: b91e363fcc13ba55cadf6a00c9b53792
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BuildManager
+  - hash:
+      serializedVersion: 2
+      Hash: b3cf00250b22339cf298376e8596e247
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController
+    className: PhysicsMover
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController
+    className: KinematicCharacterSystem
+  - hash:
+      serializedVersion: 2
+      Hash: cca86f685ccc868f2b699d65bfe304b2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PlanetManager
+  - hash:
+      serializedVersion: 2
+      Hash: d9a4bce43ed036801b72d27e86c3a35f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleCharacterCamera
+  - hash:
+      serializedVersion: 2
+      Hash: f4658d2347673fa4e10a9977335b54a9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleAIController
+  - hash:
+      serializedVersion: 2
+      Hash: b784545e13c2cccfe40573a24c132c00
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PrefabLauncher
+  - hash:
+      serializedVersion: 2
+      Hash: 77ded4babbcc088ac09df0be746aa716
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleCharacterController
+  - hash:
+      serializedVersion: 2
+      Hash: 9ee137a8ee2c4a7537792c038f0a1c04
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController
+    className: KinematicCharacterMotor
+  - hash:
+      serializedVersion: 2
+      Hash: 245ae15cf551085056829990b6254fdf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: FrameratePanel
+  - hash:
+      serializedVersion: 2
+      Hash: a4b044df10eb0b32de9b0dfd4d0201d8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterRepresentation
   platform: 5
   scenePathNames:
   - Assets/PartY/Demo/Scenes/ClientMenu.unity

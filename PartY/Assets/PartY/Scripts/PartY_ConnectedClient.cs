@@ -93,8 +93,8 @@ namespace PartY
 
                         if (parsed)
                         {
-                            PartY.loggedIn = true;
-                            Debug.Log("ID established! Connection successful");
+                            Debug.Log("Token was read, verifying with host!");
+                            SendTextData("Verify," + userID);
                         }
                         else Debug.Log("Something wen't wrong trying to parse the ID the host sent...");
                     }
@@ -122,7 +122,7 @@ namespace PartY
                             }
                         }
 
-                        if(LobbyHandler.myLobby.ownerUsername == parser[1])
+                        if (LobbyHandler.myLobby.ownerUsername == parser[1])
                         {
                             LobbySpawner.hostClosed = true;
                             LobbySpawner.leaveLobby = true;
@@ -148,7 +148,7 @@ namespace PartY
                     else if (parser[0] == "LobbyJoiner")
                     {
                         Debug.Log(parser[2] + " joined " + parser[1] + "'s lobby");
-                        
+
                         for (int i = 0; i < LobbyHandler.lobbies.Count; i++)
                         {
                             if (LobbyHandler.lobbies[i].ownerUsername == parser[1])
@@ -156,9 +156,9 @@ namespace PartY
                                 LobbyHandler.lobbies[i].lobbySize += 1;
                                 LobbyHandler.lobbies[i].clients.Add(parser[2]);
 
-                                if(LobbyHandler.myLobby != null)
+                                if (LobbyHandler.myLobby != null)
                                 {
-                                    if(LobbyHandler.myLobby.ownerUsername == parser[1])
+                                    if (LobbyHandler.myLobby.ownerUsername == parser[1])
                                     {
                                         LobbyHandler.myLobby.clients.Add(parser[2]);
 
@@ -218,6 +218,7 @@ namespace PartY
                     {
                         Debug.LogWarning("Invalid lobby!");
                         LobbyHandler.joining = false;
+                        LobbySpawner.lobbyFull = true;
                     }
                     else if (parser[0] == "FailedToLeave")
                     {
@@ -243,8 +244,8 @@ namespace PartY
 
                             //Flush out old client data.
                             LobbyHandler.myLobby.clients = new List<string>();
-                            
-                            for(int i = 1; i < parser.Length; i++)
+
+                            for (int i = 1; i < parser.Length; i++)
                             {
                                 LobbyHandler.myLobby.clients.Add(parser[i]);
                             }
@@ -255,6 +256,32 @@ namespace PartY
                         {
                             Debug.LogWarning("Tried to get info about current joined lobby, but you weren't detected in a lobby!");
                         }
+                    }
+                    else if (parser[0] == "LobbyStarted")
+                    {
+                        bool myLobby = false;
+
+                        if(LobbyHandler.myLobby != null)
+                        {
+                            if (LobbyHandler.myLobby.ownerUsername == parser[1])
+                            {
+                                myLobby = true;
+
+                                //Mark lobby as in progress.
+
+                                //Start up lobby
+                                LobbySpawner.startGame = true;
+                            }
+                        }
+
+                        if(!myLobby)
+                        {
+                            //Mark lobby as in progress.
+                        }
+                    }
+                    else if (parser[0] == "RecieveLobbyTransformData")
+                    {
+                        //Parse out into 4 players
                     }
                 }
             }

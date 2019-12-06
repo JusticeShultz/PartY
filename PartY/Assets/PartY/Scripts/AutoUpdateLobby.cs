@@ -23,7 +23,8 @@ namespace PartY
         {
             yield return new WaitForSeconds(UpdateRate);
 
-            _UpdateLobby();
+            if(PartY.loggedIn && PartY.IsConnectedToServer)
+                _UpdateLobby();
 
             StartCoroutine(UpdateLobby());
         }

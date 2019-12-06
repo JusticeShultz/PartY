@@ -9,18 +9,45 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text;
+using static PartY_HostSolution.Types;
 
 namespace PartY
 {
+    public struct Transform
+    {
+        public Vector3 position { get; set; }
+        public Vector3 rotation { get; set; }
+        public Vector3 scale { get; set; }
+
+        public Transform(int garbage) { position = Vector3.zero; rotation = Vector3.zero; scale = Vector3.zero; }
+
+        public Transform(Vector3 pos, Vector3 rot, Vector3 sca)
+        {
+            position = pos;
+            rotation = rot;
+            scale = sca;
+        }
+
+        public void Set(Transform incoming)
+        {
+            position = incoming.position;
+            rotation = incoming.rotation;
+            scale = incoming.scale;
+        }
+    }
+
     public class User
     {
         public PartY_ConnectedClient clientConnection;
         public string username;
 
+        public Transform transform;
+
         public User(PartY_ConnectedClient cConnection, string userName)
         {
             clientConnection = cConnection;
             username = userName;
+            transform = new Transform();
         }
     }
 
@@ -37,6 +64,46 @@ namespace PartY
         public Lobby(User _host)
         {
             host = _host;
+        }
+
+        public void StartLobby()
+        {
+            host.transform.position = new Vector3(0, 1.318f, 10);
+
+            if(usersConnected.Count > 0)
+                usersConnected[0].transform.position = new Vector3(10, 1.318f, 0);
+
+            if (usersConnected.Count > 1)
+                usersConnected[1].transform.position = new Vector3(-10, 1.318f, 0);
+
+            if (usersConnected.Count > 2)
+                usersConnected[2].transform.position = new Vector3(0, 1.318f, -10);
+        }
+
+        public void UpdateLobby(Transform _host)
+        {
+            host.transform.Set(_host);
+        }
+
+        public void UpdateLobby(Transform _host, Transform _user1)
+        {
+            host.transform.Set(_host);
+            usersConnected[0].transform.Set(_user1);
+        }
+
+        public void UpdateLobby(Transform _host, Transform _user1, Transform _user2)
+        {
+            host.transform.Set(_host);
+            usersConnected[0].transform.Set(_user1);
+            usersConnected[1].transform.Set(_user2);
+        }
+
+        public void UpdateLobby(Transform _host, Transform _user1, Transform _user2, Transform _user3)
+        {
+            host.transform.Set(_host);
+            usersConnected[0].transform.Set(_user1);
+            usersConnected[1].transform.Set(_user2);
+            usersConnected[2].transform.Set(_user3);
         }
     }
 

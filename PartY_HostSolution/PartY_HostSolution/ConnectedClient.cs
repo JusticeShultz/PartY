@@ -256,8 +256,11 @@ namespace PartY
                         {
                             if (parser[1] == Program.instance.lobbyList[i].host.username)
                             {
-                                Program.instance.lobbyList[i].usersConnected.Add(new User(clientConnection, parser[2]));
-                                joined = true;
+                                if (Program.instance.lobbyList[i].usersConnected.Count < 3)
+                                {
+                                    Program.instance.lobbyList[i].usersConnected.Add(new User(clientConnection, parser[2]));
+                                    joined = true;
+                                }
                                 break;
                             }
                         }
@@ -366,7 +369,13 @@ namespace PartY
                         byte[] buffer = System.Text.Encoding.UTF8.GetBytes("LobbyInfo," + joiners);
                         stream.Write(buffer, 0, buffer.Length);
                     }
-
+                    else if (parser[0] == "StartLobby")
+                    {
+                        for (int i = 0; i < Program.instance.clientList.Count; i++)
+                        {
+                            Program.instance.clientList[i].Send("LobbyStarted," + parser[1]);
+                        }
+                    }
                 }
             }
             else

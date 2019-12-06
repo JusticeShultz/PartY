@@ -16,6 +16,10 @@ namespace PartY
         public static bool updateJoinedLobby = false;
         public static bool showLoading = false;
         public static bool hideLoading = false;
+        public static bool lobbyFull = false;
+        public static bool startGame = false;
+
+        private float loadTime = 0f;
 
         public LobbyHandler handler;
         #endregion
@@ -45,8 +49,7 @@ namespace PartY
                     lobby.transform.name = LobbyHandler.lobbies[i].ownerUsername + "s_Lobby";
                     lobby.transform.SetParent(handler.contentObj.transform);
                     rectTransform.anchoredPosition = new Vector2(0, currentY);
-                    _lobbyTemplate.lobbyName.text = LobbyHandler.lobbies[i].ownerUsername + "'s Lobby";
-                    _lobbyTemplate.lobbyCount.text = LobbyHandler.lobbies[i].lobbySize + "/4";
+                    _lobbyTemplate.lobbyName.text = LobbyHandler.lobbies[i].ownerUsername + "'s PartY";
                     string temp = LobbyHandler.lobbies[i].ownerUsername;
                     _lobbyTemplate.lobbyButton.onClick.AddListener(delegate { handler.JoinLobby(temp); });
 
@@ -95,9 +98,22 @@ namespace PartY
 
             if (hideLoading)
             {
+                loadTime = 0f;
                 hideLoading = false;
 
                 handler.loading.SetActive(false);
+            }
+            else if(handler.loading.activeSelf)
+            {
+                loadTime += Time.deltaTime;
+
+                if(loadTime >= 0.3f)
+                {
+                    loadTime = 0f;
+                    handler._Menu.SetActive(true);
+                    hideLoading = true;
+                    lobbyFull = true;
+                }
             }
 
             if (updateHostedLobby)
@@ -108,11 +124,11 @@ namespace PartY
 
                 if(LobbyHandler.myLobby != null)
                 {
-                    handler._HostedLobbyTitle.text = LobbyHandler.myLobby.ownerUsername + "'s Lobby";
+                    handler._HostedLobbyTitle.text = LobbyHandler.myLobby.ownerUsername + "'s PartY";
 
                     PartY.instance.host.SendTextData("GetLobbyData," + LobbyHandler.myLobby.ownerUsername);
                 }
-
+                
                 try
                 {
                     handler.host_joiners[1].text = LobbyHandler.myLobby == null ? "Empty" : LobbyHandler.myLobby.clients[0];
@@ -161,6 +177,13 @@ namespace PartY
                 else
                     handler.host_joiners[3].color = new Color(0.1960784f, 0.1960784f, 0.1960784f);
                 #endregion
+
+                if(handler.host_joiners[1].text == "")
+                    handler.host_joiners[1].text = "Empty";
+                if (handler.host_joiners[2].text == "")
+                    handler.host_joiners[2].text = "Empty";
+                if (handler.host_joiners[3].text == "")
+                    handler.host_joiners[3].text = "Empty";
             }
 
             if (updateJoinedLobby)
@@ -171,7 +194,7 @@ namespace PartY
 
                 if (LobbyHandler.myLobby != null)
                 {
-                    handler._JoinedLobbyTitle.text = LobbyHandler.myLobby.ownerUsername + "'s Lobby";
+                    handler._JoinedLobbyTitle.text = LobbyHandler.myLobby.ownerUsername + "'s PartY";
 
                     PartY.instance.host.SendTextData("GetLobbyData," + LobbyHandler.myLobby.ownerUsername);
                 }
@@ -224,7 +247,33 @@ namespace PartY
                 else
                     handler.joiners[3].color = new Color(0.1960784f, 0.1960784f, 0.1960784f);
                 #endregion
+
+                if (handler.joiners[1].text == "")
+                    handler.joiners[1].text = "Empty";
+                if (handler.joiners[2].text == "")
+                    handler.joiners[2].text = "Empty";
+                if (handler.joiners[3].text == "")
+                    handler.joiners[3].text = "Empty";
             } 
+
+            if(lobbyFull)
+            {
+                lobbyFull = false;
+                handler.lobbyFull.SetActive(true);
+            }
+
+            if(startGame)
+            {
+                startGame = false;
+                handler._Menu.SetActive(false);
+                handler._JoinedLobby.SetActive(false);
+                handler._HostedLobby.SetActive(false);
+                handler._GameHandler.SetActive(true);
+
+                /*
+                 * Set up any necessary game start logic here.
+                 */
+            }
         }
     }
 }
