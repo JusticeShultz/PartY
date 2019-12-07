@@ -261,7 +261,7 @@ namespace PartY
                     {
                         bool myLobby = false;
 
-                        if(LobbyHandler.myLobby != null)
+                        if (LobbyHandler.myLobby != null)
                         {
                             if (LobbyHandler.myLobby.ownerUsername == parser[1])
                             {
@@ -274,14 +274,186 @@ namespace PartY
                             }
                         }
 
-                        if(!myLobby)
+                        if (!myLobby)
                         {
                             //Mark lobby as in progress.
                         }
                     }
-                    else if (parser[0] == "RecieveLobbyTransformData")
+                    else if (parser[0] == "GamePayload")
                     {
-                        //Parse out into 4 players
+                        try
+                        {
+                            if(parser.Length > 0)
+                            //Pick out data and give it to target transforms.
+                            if (parser[1] != LobbyHandler.instance.usernameField.text)
+                            {
+                                for (int i = 0; i < GameHandler.instance.otherPlayers.Count; i++)
+                                {
+                                    if (GameHandler.instance.otherPlayers[i].name == parser[1])
+                                    {
+                                        float posX = 0f;
+                                        float posY = 0f;
+                                        float posZ = 0f;
+                                        float rotX = 0f;
+                                        float rotY = 0f;
+                                        float rotZ = 0f;
+                                        float scaleX = 0f;
+                                        float scaleY = 0f;
+                                        float scaleZ = 0f;
+
+                                        bool posXParsed = float.TryParse(parser[2], out posX);
+                                        bool posYParsed = float.TryParse(parser[3], out posY);
+                                        bool posZParsed = float.TryParse(parser[4], out posZ);
+
+                                        bool rotXParsed = float.TryParse(parser[5], out rotX);
+                                        bool rotYParsed = float.TryParse(parser[6], out rotY);
+                                        bool rotZParsed = float.TryParse(parser[7], out rotZ);
+
+                                        bool scaleXParsed = float.TryParse(parser[8], out scaleX);
+                                        bool scaleYParsed = float.TryParse(parser[9], out scaleY);
+                                        bool scaleZParsed = float.TryParse(parser[10], out scaleZ);
+
+                                        if (posXParsed && posYParsed && posZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].position = new Vector3(posX, posY, posZ);
+
+                                        if (rotXParsed && rotYParsed && rotZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].rotation = new Vector3(rotX, rotY, rotZ);
+
+                                        if (scaleXParsed && scaleYParsed && scaleZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].scale = new Vector3(scaleX, scaleY, scaleZ);
+                                    }
+                                }
+                            }
+
+                            if(parser.Length > 11)
+                            if (parser[11] != LobbyHandler.instance.usernameField.text)
+                            {
+                                for (int i = 0; i < GameHandler.instance.otherPlayers.Count; i++)
+                                {
+                                    if (GameHandler.instance.otherPlayers[i].name == parser[11])
+                                    {
+                                        float posX = 0f;
+                                        float posY = 0f;
+                                        float posZ = 0f;
+                                        float rotX = 0f;
+                                        float rotY = 0f;
+                                        float rotZ = 0f;
+                                        float scaleX = 0f;
+                                        float scaleY = 0f;
+                                        float scaleZ = 0f;
+
+                                        bool posXParsed = float.TryParse(parser[12], out posX);
+                                        bool posYParsed = float.TryParse(parser[13], out posY);
+                                        bool posZParsed = float.TryParse(parser[14], out posZ);
+
+                                        bool rotXParsed = float.TryParse(parser[15], out rotX);
+                                        bool rotYParsed = float.TryParse(parser[16], out rotY);
+                                        bool rotZParsed = float.TryParse(parser[17], out rotZ);
+
+                                        bool scaleXParsed = float.TryParse(parser[18], out scaleX);
+                                        bool scaleYParsed = float.TryParse(parser[19], out scaleY);
+                                        bool scaleZParsed = float.TryParse(parser[20], out scaleZ);
+
+                                        if (posXParsed && posYParsed && posZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].position = new Vector3(posX, posY, posZ);
+
+                                        if (rotXParsed && rotYParsed && rotZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].rotation = new Vector3(rotX, rotY, rotZ);
+
+                                        if (scaleXParsed && scaleYParsed && scaleZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].scale = new Vector3(scaleX, scaleY, scaleZ);
+                                    }
+                                }
+                            }
+
+                            if(parser.Length > 20)
+                            if (parser[21] != LobbyHandler.instance.usernameField.text)
+                            {
+                                for (int i = 0; i < GameHandler.instance.otherPlayers.Count; i++)
+                                {
+                                    if (GameHandler.instance.otherPlayers[i].name == parser[21])
+                                    {
+                                        float posX = 0f;
+                                        float posY = 0f;
+                                        float posZ = 0f;
+                                        float rotX = 0f;
+                                        float rotY = 0f;
+                                        float rotZ = 0f;
+                                        float scaleX = 0f;
+                                        float scaleY = 0f;
+                                        float scaleZ = 0f;
+
+                                        bool posXParsed = float.TryParse(parser[22], out posX);
+                                        bool posYParsed = float.TryParse(parser[23], out posY);
+                                        bool posZParsed = float.TryParse(parser[24], out posZ);
+
+                                        bool rotXParsed = float.TryParse(parser[25], out rotX);
+                                        bool rotYParsed = float.TryParse(parser[26], out rotY);
+                                        bool rotZParsed = float.TryParse(parser[27], out rotZ);
+
+                                        bool scaleXParsed = float.TryParse(parser[28], out scaleX);
+                                        bool scaleYParsed = float.TryParse(parser[29], out scaleY);
+                                        bool scaleZParsed = float.TryParse(parser[30], out scaleZ);
+
+                                        if (posXParsed && posYParsed && posZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].position = new Vector3(posX, posY, posZ);
+
+                                        if (rotXParsed && rotYParsed && rotZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].rotation = new Vector3(rotX, rotY, rotZ);
+
+                                        if (scaleXParsed && scaleYParsed && scaleZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].scale = new Vector3(scaleX, scaleY, scaleZ);
+                                    }
+                                }
+                            }
+
+                            if(parser.Length > 30)
+                            if (parser[31] != LobbyHandler.instance.usernameField.text)
+                            {
+                                for (int i = 0; i < GameHandler.instance.otherPlayers.Count; i++)
+                                {
+                                    if (GameHandler.instance.otherPlayers[i].name == parser[31])
+                                    {
+                                        float posX = 0f;
+                                        float posY = 0f;
+                                        float posZ = 0f;
+                                        float rotX = 0f;
+                                        float rotY = 0f;
+                                        float rotZ = 0f;
+                                        float scaleX = 0f;
+                                        float scaleY = 0f;
+                                        float scaleZ = 0f;
+
+                                        bool posXParsed = float.TryParse(parser[32], out posX);
+                                        bool posYParsed = float.TryParse(parser[33], out posY);
+                                        bool posZParsed = float.TryParse(parser[34], out posZ);
+
+                                        bool rotXParsed = float.TryParse(parser[35], out rotX);
+                                        bool rotYParsed = float.TryParse(parser[36], out rotY);
+                                        bool rotZParsed = float.TryParse(parser[37], out rotZ);
+
+                                        bool scaleXParsed = float.TryParse(parser[38], out scaleX);
+                                        bool scaleYParsed = float.TryParse(parser[39], out scaleY);
+                                        bool scaleZParsed = float.TryParse(parser[40], out scaleZ);
+
+                                        if (posXParsed && posYParsed && posZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].position = new Vector3(posX, posY, posZ);
+
+                                        if (rotXParsed && rotYParsed && rotZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].rotation = new Vector3(rotX, rotY, rotZ);
+
+                                        if (scaleXParsed && scaleYParsed && scaleZParsed)
+                                            GameHandler.instance.otherPlayersTargets[i].scale = new Vector3(scaleX, scaleY, scaleZ);
+                                    }
+                                }
+
+                            }
+                        } catch(Exception a)
+                        {
+                            return;
+                        }
+
+                        Console.WriteLine("Parsed!");
                     }
                 }
             }

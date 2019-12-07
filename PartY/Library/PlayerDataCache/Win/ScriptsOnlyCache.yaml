@@ -70,51 +70,51 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9670}
     - Class: 114
-      Script: {instanceID: 9716}
+      Script: {instanceID: 9720}
     - Class: 114
-      Script: {instanceID: 9822}
+      Script: {instanceID: 9826}
     - Class: 114
-      Script: {instanceID: 9824}
+      Script: {instanceID: 9828}
     - Class: 114
-      Script: {instanceID: 9862}
+      Script: {instanceID: 9866}
     - Class: 114
-      Script: {instanceID: 9882}
+      Script: {instanceID: 9868}
     - Class: 114
-      Script: {instanceID: 10148}
+      Script: {instanceID: 9888}
     - Class: 114
-      Script: {instanceID: 10172}
+      Script: {instanceID: 10158}
     - Class: 114
-      Script: {instanceID: 10224}
+      Script: {instanceID: 10180}
     - Class: 114
-      Script: {instanceID: 10236}
+      Script: {instanceID: 10234}
     - Class: 114
-      Script: {instanceID: 10358}
+      Script: {instanceID: 10246}
+    - Class: 114
+      Script: {instanceID: 10370}
     - Class: 114
       Script: {instanceID: 10404}
     - Class: 114
-      Script: {instanceID: 10516}
+      Script: {instanceID: 10418}
     - Class: 114
-      Script: {instanceID: 10580}
+      Script: {instanceID: 10530}
     - Class: 114
-      Script: {instanceID: 10764}
+      Script: {instanceID: 10534}
     - Class: 114
-      Script: {instanceID: 11022}
+      Script: {instanceID: 10598}
     - Class: 114
-      Script: {instanceID: 11310}
+      Script: {instanceID: 10786}
     - Class: 114
-      Script: {instanceID: 11362}
+      Script: {instanceID: 11050}
     - Class: 114
-      Script: {instanceID: 118514}
+      Script: {instanceID: 11134}
     - Class: 114
-      Script: {instanceID: 200656}
+      Script: {instanceID: 11346}
     - Class: 114
-      Script: {instanceID: 200726}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 200748}
+      Script: {instanceID: 11402}
     - Class: 114
-      Script: {instanceID: 200756}
-    - Class: 114
-      Script: {instanceID: 276810}
+      Script: {instanceID: 11440}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -144,6 +144,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
+  - hash:
+      serializedVersion: 2
+      Hash: 19f67f2e0407c578ae3bef099bed1643
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PlayableMover
+  - hash:
+      serializedVersion: 2
+      Hash: a6e60361775622f2904dc3d2ac9b1962
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: OrbitCamera
   - hash:
       serializedVersion: 2
       Hash: 87ff43d2baf3385cba327d8f803a4ebb
@@ -206,6 +218,12 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
+      Hash: e18a8869e55feb855ab200011c5d8e8a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameHandler
+  - hash:
+      serializedVersion: 2
       Hash: 8e0313c6f5e2ce35991fec2d64f8eaab
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -264,6 +282,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 59636662ec2341328ac1dab92db4c32d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: Teleporter
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -338,6 +362,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: ddfa15630085716d8a0c1e79a6f48ce7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleMovingPlatform
+  - hash:
+      serializedVersion: 2
       Hash: f266d9a18124f7eb037d0deb91387e06
     assemblyName: Assembly-CSharp.dll
     namespaceName: PartY
@@ -348,6 +378,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Asset
+  - hash:
+      serializedVersion: 2
+      Hash: d70689c2eef12888ba1fd597faaf89e6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExamplePlayer
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -362,6 +398,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: b91e363fcc13ba55cadf6a00c9b53792
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BuildManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -372,6 +414,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: a4b044df10eb0b32de9b0dfd4d0201d8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterRepresentation
   - hash:
       serializedVersion: 2
       Hash: cd2bcbe0fa282fd686b26b60a6c3386c
@@ -402,6 +450,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: b3cf00250b22339cf298376e8596e247
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController
+    className: PhysicsMover
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -446,6 +500,12 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController
+    className: KinematicCharacterSystem
+  - hash:
+      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -464,6 +524,12 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
+      Hash: cca86f685ccc868f2b699d65bfe304b2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PlanetManager
+  - hash:
+      serializedVersion: 2
       Hash: ae83e830e7a90c0aff918c4c2e520825
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -476,6 +542,18 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
+      Hash: d9a4bce43ed036801b72d27e86c3a35f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleCharacterCamera
+  - hash:
+      serializedVersion: 2
+      Hash: f4658d2347673fa4e10a9977335b54a9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleAIController
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -486,6 +564,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_StyleSheet
+  - hash:
+      serializedVersion: 2
+      Hash: b784545e13c2cccfe40573a24c132c00
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: PrefabLauncher
   - hash:
       serializedVersion: 2
       Hash: df434544c9f7b33d1cc7e635b180d279
@@ -516,6 +600,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Outline
+  - hash:
+      serializedVersion: 2
+      Hash: 77ded4babbcc088ac09df0be746aa716
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: KinematicCharacterController.Examples
+    className: ExampleCharacterController
   - hash:
       serializedVersion: 2
       Hash: a63fc1a3b035e5a0b5839cd7f7b3086e
@@ -566,106 +656,16 @@ ScriptsOnlyBuild:
     className: Slider
   - hash:
       serializedVersion: 2
-      Hash: 0fd6822f6177297bd0eb4d83cc7a9030
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: ToggleGroup
-  - hash:
-      serializedVersion: 2
-      Hash: c3d3430df9e3ea95e3e3d587961390fb
-    assemblyName: Unity.Timeline.dll
-    namespaceName: UnityEngine.Timeline
-    className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: e18a8869e55feb855ab200011c5d8e8a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameHandler
-  - hash:
-      serializedVersion: 2
-      Hash: 19f67f2e0407c578ae3bef099bed1643
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: PlayableMover
-  - hash:
-      serializedVersion: 2
-      Hash: a6e60361775622f2904dc3d2ac9b1962
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: OrbitCamera
-  - hash:
-      serializedVersion: 2
-      Hash: 59636662ec2341328ac1dab92db4c32d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: Teleporter
-  - hash:
-      serializedVersion: 2
-      Hash: ddfa15630085716d8a0c1e79a6f48ce7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: ExampleMovingPlatform
-  - hash:
-      serializedVersion: 2
-      Hash: d70689c2eef12888ba1fd597faaf89e6
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: ExamplePlayer
-  - hash:
-      serializedVersion: 2
-      Hash: b91e363fcc13ba55cadf6a00c9b53792
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: BuildManager
-  - hash:
-      serializedVersion: 2
-      Hash: b3cf00250b22339cf298376e8596e247
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController
-    className: PhysicsMover
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController
-    className: KinematicCharacterSystem
-  - hash:
-      serializedVersion: 2
-      Hash: cca86f685ccc868f2b699d65bfe304b2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: PlanetManager
-  - hash:
-      serializedVersion: 2
-      Hash: d9a4bce43ed036801b72d27e86c3a35f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: ExampleCharacterCamera
-  - hash:
-      serializedVersion: 2
-      Hash: f4658d2347673fa4e10a9977335b54a9
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: ExampleAIController
-  - hash:
-      serializedVersion: 2
-      Hash: b784545e13c2cccfe40573a24c132c00
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: PrefabLauncher
-  - hash:
-      serializedVersion: 2
-      Hash: 77ded4babbcc088ac09df0be746aa716
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: KinematicCharacterController.Examples
-    className: ExampleCharacterController
-  - hash:
-      serializedVersion: 2
       Hash: 9ee137a8ee2c4a7537792c038f0a1c04
     assemblyName: Assembly-CSharp.dll
     namespaceName: KinematicCharacterController
     className: KinematicCharacterMotor
+  - hash:
+      serializedVersion: 2
+      Hash: 0fd6822f6177297bd0eb4d83cc7a9030
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: ToggleGroup
   - hash:
       serializedVersion: 2
       Hash: 245ae15cf551085056829990b6254fdf
@@ -674,11 +674,11 @@ ScriptsOnlyBuild:
     className: FrameratePanel
   - hash:
       serializedVersion: 2
-      Hash: a4b044df10eb0b32de9b0dfd4d0201d8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CharacterRepresentation
+      Hash: c3d3430df9e3ea95e3e3d587961390fb
+    assemblyName: Unity.Timeline.dll
+    namespaceName: UnityEngine.Timeline
+    className: PlayableTrack
   platform: 5
   scenePathNames:
   - Assets/PartY/Demo/Scenes/ClientMenu.unity
-  playerPath: C:/Users/s189081/Desktop/ClientTest00/PartY.exe
+  playerPath: C:/Users/s189081/Desktop/ClientTest0111/PartY.exe

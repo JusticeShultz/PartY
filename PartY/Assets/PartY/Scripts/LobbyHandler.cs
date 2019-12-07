@@ -166,8 +166,7 @@ namespace PartY
             myLobby = new Lobby(usernameField.text, 1);
             LobbySpawner.updateHostedLobby = true;
         }
-
-        //Not done
+        
         public void StartLobby()
         {
             //Payload: Start lobby, your name, your id
@@ -188,20 +187,7 @@ namespace PartY
             myLobby = null;
             RecreateLobbyUI();
         }
-
-        private void OnApplicationQuit()
-        {
-            if (_HostedLobby.activeSelf)
-            {
-                CloseLobby();
-            }
-
-            if (_JoinedLobby.activeSelf)
-            {
-                LeaveLobby(myLobby.ownerUsername);
-            }
-        }
-
+        
         public void CloseLobby()
         {
             _Menu.SetActive(true);
@@ -227,6 +213,19 @@ namespace PartY
         public void RecreateLobbyUI()
         {
             LobbySpawner.needsUpdate = true;
+        }
+
+        private void OnApplicationQuit()
+        {
+            if (_HostedLobby.activeSelf)
+            {
+                CloseLobby();
+            }
+
+            if (_JoinedLobby.activeSelf)
+            {
+                LeaveLobby(myLobby.ownerUsername);
+            }
         }
         #endregion
     }

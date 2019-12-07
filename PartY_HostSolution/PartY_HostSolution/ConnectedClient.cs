@@ -376,6 +376,121 @@ namespace PartY
                             Program.instance.clientList[i].Send("LobbyStarted," + parser[1]);
                         }
                     }
+                    else if (parser[0] == "MovementPayload")
+                    {
+                        #region Unpack payload and update the lobby user
+                        float xPos = 0;
+                        float yPos = 0;
+                        float zPos = 0;
+
+                        float xRot = 0;
+                        float yRot = 0;
+                        float zRot = 0;
+
+                        float xScale = 0;
+                        float yScale = 0;
+                        float zScale = 0;
+
+                        bool xPosRes = float.TryParse(parser[2], out xPos);
+                        bool yPosRes = float.TryParse(parser[3], out yPos);
+                        bool zPosRes = float.TryParse(parser[4], out zPos);
+
+                        bool xRotRes = float.TryParse(parser[5], out xRot);
+                        bool yRotRes = float.TryParse(parser[6], out yRot);
+                        bool zRotRes = float.TryParse(parser[7], out zRot);
+
+                        bool xScaleRes = float.TryParse(parser[5], out xScale);
+                        bool yScaleRes = float.TryParse(parser[6], out yScale);
+                        bool zScaleRes = float.TryParse(parser[7], out zScale);
+
+                        int lobbyIndex = -1;
+
+                        for (int i = 0; i < Program.instance.lobbyList.Count; i++)
+                        {
+                            if (lobbyIndex != -1) break;
+
+                            if (Program.instance.lobbyList[i].host.username == parser[1])
+                            {
+                                //Hosts data
+                                if (parser[11] == Program.instance.lobbyList[i].host.username)
+                                {
+                                    if (xPosRes && yPosRes && zPosRes)
+                                        Program.instance.lobbyList[i].host.transform.position = new PartY_HostSolution.Types.Vector3(xPos, yPos, zPos);
+
+                                    if (xRotRes && yRotRes && zRotRes)
+                                        Program.instance.lobbyList[i].host.transform.rotation = new PartY_HostSolution.Types.Vector3(xRot, yRot, zRot);
+
+                                    if (xScaleRes && yScaleRes && zScaleRes)
+                                        Program.instance.lobbyList[i].host.transform.scale = new PartY_HostSolution.Types.Vector3(xScale, yScale, zScale);
+
+                                    lobbyIndex = i;
+                                    break;
+                                }
+                                else
+                                {
+                                    for (int z = 0; z < Program.instance.lobbyList[i].usersConnected.Count; z++)
+                                    {
+                                        if (parser[11] == Program.instance.lobbyList[i].usersConnected[z].username)
+                                        {
+                                            if (xPosRes && yPosRes && zPosRes)
+                                                Program.instance.lobbyList[i].usersConnected[z].transform.position = new PartY_HostSolution.Types.Vector3(xPos, yPos, zPos);
+
+                                            if (xRotRes && yRotRes && zRotRes)
+                                                Program.instance.lobbyList[i].usersConnected[z].transform.rotation = new PartY_HostSolution.Types.Vector3(xRot, yRot, zRot);
+
+                                            if (xScaleRes && yScaleRes && zScaleRes)
+                                                Program.instance.lobbyList[i].usersConnected[z].transform.scale = new PartY_HostSolution.Types.Vector3(xScale, yScale, zScale);
+
+                                            lobbyIndex = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+
+                        try
+                        {
+                            #region Repack the lobby into a payload
+
+                            //Inject the host data.
+                            string payload = "GamePayload," + Program.instance.lobbyList[lobbyIndex].host.username + "," + Program.instance.lobbyList[lobbyIndex].host.transform.position.x + "," +
+                                 Program.instance.lobbyList[lobbyIndex].host.transform.position.y + "," + Program.instance.lobbyList[lobbyIndex].host.transform.position.z + ","
+                                  + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.x + "," + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.y + ","
+                                   + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.z + "," + Program.instance.lobbyList[lobbyIndex].host.transform.scale.x + ","
+                                    + Program.instance.lobbyList[lobbyIndex].host.transform.scale.y + "," + Program.instance.lobbyList[lobbyIndex].host.transform.scale.z;
+
+                            //Tag on connected users.
+                            for (int i = 0; i < Program.instance.lobbyList[lobbyIndex].usersConnected.Count; i++)
+                            {
+                                payload += "," + Program.instance.lobbyList[lobbyIndex].usersConnected[i].username + ",";
+
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.position.x + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.position.y + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.position.z + ",";
+
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.rotation.x + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.rotation.y + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.rotation.z + ",";
+
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.scale.x + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.scale.y + ",";
+                                payload += Program.instance.lobbyList[lobbyIndex].usersConnected[i].transform.scale.z;
+                            }
+
+                            //Write out payload into a buffer.
+                            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(payload);
+                            //Stream out the payload.
+                            stream.Write(buffer, 0, buffer.Length);
+                            #endregion
+
+                        }
+                        catch (Exception a)
+                        {
+                            return;
+                        }
+                    }
                 }
             }
             else

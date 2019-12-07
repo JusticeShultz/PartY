@@ -9,11 +9,13 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour
 {
     #region Data
-    public KinematicCharacterController.Examples.ExamplePlayer player;
-    public List<CharacterRepresentation> players;
+    public static GameHandler instance;
 
-    [HideInInspector] public List<GameObject> otherPlayers;
-    [HideInInspector] public List<PartY.Player> otherPlayersTargets;
+    public KinematicCharacterController.Examples.ExamplePlayer player;
+    public List<CharacterRepresentation> players = new List<CharacterRepresentation>();
+
+    [HideInInspector] public List<GameObject> otherPlayers = new List<GameObject>();
+    [HideInInspector] public List<PartY.Player> otherPlayersTargets = new List<PartY.Player>();
     [HideInInspector] public CharacterRepresentation myPlayer = null;
 
     Vector3 lastPos;
@@ -24,6 +26,8 @@ public class GameHandler : MonoBehaviour
     #region Startup
     private void OnEnable()
     {
+        instance = this;
+
         //Go through the host/clients and find yourself, removing all player controllers in the process if they are not on your player.
         //Additionally set up the example kinematic player handler so that the user can move around.
         if (PartY.LobbyHandler.myLobby.ownerUsername == PartY.LobbyHandler.instance.usernameField.text)
@@ -33,13 +37,13 @@ public class GameHandler : MonoBehaviour
             players[0].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.instance.usernameField.text;
             player.Character = players[0].playerController;
 
-            for (int i = 1; i < PartY.LobbyHandler.myLobby.clients.Count; i++)
+            for (int i = 0; i < PartY.LobbyHandler.myLobby.clients.Count; i++)
             {
-                players[i].gameObject.name = PartY.LobbyHandler.myLobby.clients[i];
-                otherPlayersTargets.Add(new PartY.Player(PartY.LobbyHandler.myLobby.clients[i], players[i].transform.position, players[i].transform.rotation.eulerAngles, players[i].transform.localScale));
-                otherPlayers.Add(players[i].gameObject);
-                players[i].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.myLobby.clients[i];
-                players[i].Cleanup();
+                players[i + 1].gameObject.name = PartY.LobbyHandler.myLobby.clients[i];
+                otherPlayersTargets.Add(new PartY.Player(PartY.LobbyHandler.myLobby.clients[i], players[i + 1].transform.position, players[i + 1].transform.rotation.eulerAngles, players[i + 1].transform.localScale));
+                otherPlayers.Add(players[i + 1].gameObject);
+                players[i + 1].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.myLobby.clients[i];
+                players[i + 1].Cleanup();
             }
         }
         else
@@ -50,22 +54,23 @@ public class GameHandler : MonoBehaviour
             players[0].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.myLobby.ownerUsername;
             players[0].Cleanup();
 
-            for (int i = 1; i < PartY.LobbyHandler.myLobby.clients.Count; i++)
+            for (int i = 0; i < PartY.LobbyHandler.myLobby.clients.Count; i++)
             {
                 if (PartY.LobbyHandler.myLobby.clients[i] == PartY.LobbyHandler.instance.usernameField.text)
                 {
-                    players[i].gameObject.name = PartY.LobbyHandler.instance.usernameField.text;
-                    myPlayer = players[i];
-                    players[i].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.instance.usernameField.text;
-                    player.Character = players[i].playerController;
+                    Debug.Log("Found local player client");
+                    players[i + 1].gameObject.name = PartY.LobbyHandler.instance.usernameField.text;
+                    myPlayer = players[i + 1];
+                    players[i + 1].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.instance.usernameField.text;
+                    player.Character = players[i + 1].playerController;
                 }
                 else
                 {
-                    players[i].gameObject.name = PartY.LobbyHandler.myLobby.clients[i];
-                    otherPlayersTargets.Add(new PartY.Player(PartY.LobbyHandler.myLobby.clients[i], players[i].transform.position, players[i].transform.rotation.eulerAngles, players[i].transform.localScale));
-                    otherPlayers.Add(players[i].gameObject);
-                    players[i].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.myLobby.clients[i];
-                    players[i].Cleanup();
+                    players[i + 1].gameObject.name = PartY.LobbyHandler.myLobby.clients[i];
+                    otherPlayersTargets.Add(new PartY.Player(PartY.LobbyHandler.myLobby.clients[i], players[i + 1].transform.position, players[i + 1].transform.rotation.eulerAngles, players[i + 1].transform.localScale));
+                    otherPlayers.Add(players[i + 1].gameObject);
+                    players[i + 1].usernameField.GetComponent<TextMesh>().text = PartY.LobbyHandler.myLobby.clients[i];
+                    players[i + 1].Cleanup();
                 }
             }
         }
@@ -75,16 +80,15 @@ public class GameHandler : MonoBehaviour
     #region Gameplay
     void Update()
     {
-        #region Payload sender [Send data up to server]
-        //Send location data if anything has changed since the last frame.
-        if (myPlayer.transform.position != lastPos || myPlayer.transform.rotation != lastRot || myPlayer.transform.localScale != lastScale)
-        {
-            //[Payload] LobbyHostName, MyPositionX, MyPositionY, MyPositionZ, MyRotationX, MyRotationY, MyRotationZ, MyScaleX, MyScaleY, MyScaleZ, MyUsername
-            PartY.PartY.instance.SendTextData("MovementPayload" + PartY.LobbyHandler.myLobby.ownerUsername + "," + myPlayer.gameObject.transform.position.x +
-                "," + myPlayer.gameObject.transform.position.y + "," + myPlayer.gameObject.transform.position.z + "," + myPlayer.gameObject.transform.rotation.eulerAngles.x +
-                 "," + myPlayer.gameObject.transform.rotation.eulerAngles.y + "," + myPlayer.gameObject.transform.rotation.eulerAngles.z + "," + myPlayer.gameObject.transform.localScale.x +
-                  "," + myPlayer.gameObject.transform.localScale.y + "," + myPlayer.gameObject.transform.localScale.z + "," + PartY.LobbyHandler.instance.usernameField.text);
-        }
+        #region Payload sender [Send data up to server and ask for data back]
+        //  [0]         [1]            [2]         [3]           [4]         [5]          [6]          [7]          [8]      [9]       [10]      [11]
+        //[Payload] LobbyHostName, MyPositionX, MyPositionY, MyPositionZ, MyRotationX, MyRotationY, MyRotationZ, MyScaleX, MyScaleY, MyScaleZ, MyUsername
+        string payload = "MovementPayload," + PartY.LobbyHandler.myLobby.ownerUsername + "," + myPlayer.gameObject.transform.position.x +
+            "," + myPlayer.gameObject.transform.position.y + "," + myPlayer.gameObject.transform.position.z + "," + myPlayer.gameObject.transform.rotation.eulerAngles.x +
+                "," + myPlayer.gameObject.transform.rotation.eulerAngles.y + "," + myPlayer.gameObject.transform.rotation.eulerAngles.z + "," + myPlayer.gameObject.transform.localScale.x +
+                "," + myPlayer.gameObject.transform.localScale.y + "," + myPlayer.gameObject.transform.localScale.z + "," + PartY.LobbyHandler.instance.usernameField.text;
+
+        PartY.PartY.instance.SendTextData(payload);
         #endregion
 
         #region Interpolation [Lag reduction]
@@ -105,7 +109,7 @@ public class GameHandler : MonoBehaviour
     }
     #endregion
 
-    #region Payload reader
+    #region Payload reader [Not used in demo]
     public void RecieveLocationDataPackage(PartY.Player[] playerPayload)
     {
         for(int i = 0; i < playerPayload.Length; i++)

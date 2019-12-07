@@ -31,6 +31,10 @@ namespace PartY
 
         private void _UpdateLobby()
         {
+            //Don't update when in game mode
+            if (LobbyHandler.instance._GameHandler.activeSelf)
+                return;
+
             string externalip = new WebClient().DownloadString("http://icanhazip.com");
 
             if (PartY.instance.host != null)
