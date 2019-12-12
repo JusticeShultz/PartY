@@ -69,7 +69,7 @@ namespace PartY
 
         public void JoinLobby(string hostUsername)
         {
-            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0)
+            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0 || usernameField.text.Contains(","))
             {
                 noUsernamePopup.SetActive(true);
                 return;
@@ -125,7 +125,7 @@ namespace PartY
         //Placeholder
         public void Matchmake()
         {
-            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0)
+            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0 || usernameField.text.Contains(","))
             {
                 noUsernamePopup.SetActive(true);
                 return;
@@ -137,7 +137,7 @@ namespace PartY
 
         public void CreateLobby()
         {
-            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0)
+            if (usernameField.text == "" || usernameField.text == null || usernameField.text.Replace(" ", "").Length == 0 || usernameField.text.Contains(","))
             {
                 noUsernamePopup.SetActive(true);
                 return;

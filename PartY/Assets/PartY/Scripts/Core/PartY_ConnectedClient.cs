@@ -12,17 +12,15 @@ namespace PartY
     public class PartY_ConnectedClient
     {
         #region Data
+        ulong userID; //The users designated login token.
+
+        public readonly TcpClient connection; //The direct TCP connection to the server.
+
+        readonly byte[] readBuffer = new byte[5000]; //Read buffer for incoming data.
+
         /// <summary>
-        /// For Clients, the connection to the server.
-        /// For Servers, the connection to a client.
+        /// The current network stream we send and recieve data to and from.
         /// </summary>
-
-        ulong userID;
-
-        public readonly TcpClient connection;
-
-        readonly byte[] readBuffer = new byte[5000];
-
         public NetworkStream stream
         {
             get
@@ -34,61 +32,83 @@ namespace PartY
         }
         #endregion
 
-        #region Init
+        #region Initialization
+        /// <summary>
+        /// Full constructor of a client.
+        /// </summary>
+        /// <param name="tcpClient"></param>
         public PartY_ConnectedClient(TcpClient tcpClient)
         {
-            this.connection = tcpClient;
-            PartY.myConnection = this;
-            this.connection.NoDelay = true; // Disable Nagle's cache algorithm
+            this.connection = tcpClient; //Specified the server connection.
+            PartY.myConnection = this; //Specifies our current connection.
+            this.connection.NoDelay = true; //Disables Nagle's cache algorithm
         }
 
+        /// <summary>
+        /// Closes the current TCP server connection.
+        /// </summary>
         internal void Close()
         {
+            //Close the connection.
             connection.Close();
         }
         #endregion
 
         #region Async Events
+        /// <summary>
+        /// [Threaded] Handles incoming data packets.
+        /// </summary>
+        /// <param name="ar"></param>
         void OnRead(IAsyncResult ar)
         {
+            //If the stream isn't established anymore, then specify to Unity using an event that we have disconnected for the server.
             if (stream == null)
             {
                 PartY.instance.OnDisconnect(this);
                 return;
             }
 
+            //Grab the length of the incoming stream.
             int length = stream.EndRead(ar);
 
+            //If the stream is empty then there server is not functioning correctly. This also counts as a disconnect.
             if (length <= 0)
-            { // Connection closed
+            {
                 PartY.instance.OnDisconnect(this);
                 return;
             }
 
+            //Grab the raw string from the byte array that is recieved as a packet.
             string newMessage = System.Text.Encoding.UTF8.GetString(readBuffer, 0, length);
 
+            //For debugging, log it to the console.
             Debug.Log(newMessage);
 
+            //Specify that we will read again, this is done before hand in case something goes wrong below. This assures that we ALWAYS listen for a new message.
             stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
 
+            //Check if the message contains a ,
             if (newMessage.Contains(","))
             {
+                //Split the message contents up by each comma in the packet.
                 string[] parser = newMessage.Split(',');
-
+                
+                //Check if the parser has data.
                 if (parser.Length > 0)
                 {
+                    //Handle a packet by what it is marked as. (Always parser 0)
                     if (parser[0] == "KeyGen")
                     {
                         Debug.Log("Recieved KeyGen request");
 
                         Debug.Log(parser[1]);
 
-                        //Stops task?
-                        //PlayerPrefs.SetString("ServerID", parser[1]);
+                        //Write the token out to our documents folder.
                         WriteToken(parser[1]);
 
                         Debug.Log("Saved key -   " + parser[1] + "   - successfully.");
 
+                        //Try to reparse the data.
                         bool parsed = ulong.TryParse(parser[1], out userID);
 
                         if (parsed)
@@ -473,12 +493,12 @@ namespace PartY
                     LobbyHandler.instance.duplicateUsername.SetActive(false);
                 }
             }
-
-            //PartY.messageToDisplay += newMessage + Environment.NewLine;
-
-            //stream.BeginRead(readBuffer, 0, readBuffer.Length, OnRead, null);
         }
 
+        /// <summary>
+        /// Ends the connection safely.
+        /// </summary>
+        /// <param name="ar"></param>
         internal void EndConnect(IAsyncResult ar)
         {
             connection.EndConnect(ar);
@@ -488,6 +508,8 @@ namespace PartY
         #endregion
 
         #region API
+
+        #region Sending payloads
         internal void SendTextData(string @message)
         {
             SendPayload(System.Text.Encoding.UTF8.GetBytes(@message));
@@ -543,7 +565,11 @@ namespace PartY
 
             stream.Write(buffer, 0, buffer.Length);
         }
+        #endregion
 
+        /// <summary>
+        /// Reads the current API token.
+        /// </summary>
         public void ReadToken()
         {
             if (!File.Exists(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))
@@ -577,6 +603,10 @@ namespace PartY
             }
         }
 
+        /// <summary>
+        /// Writes the current API token.
+        /// </summary>
+        /// <param name="token"></param>
         public void WriteToken(string token)
         {
             if (!File.Exists(PartY.path + "/KeyDictionary" + PartY.instance.clientVariant.text + ".PartY"))

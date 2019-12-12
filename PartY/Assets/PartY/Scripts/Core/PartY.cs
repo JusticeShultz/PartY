@@ -31,12 +31,6 @@ namespace PartY
         public ulong clientID = 0;
 
         /// <summary>
-        /// For Clients, there is only one and it's the connection to the server.
-        /// For Servers, there are many - one per connected client.
-        /// </summary>
-        //public List<PartY_ConnectedClient> clientList = new List<PartY_ConnectedClient>();
-
-        /// <summary>
         /// The connection to the host.
         /// </summary>
         public PartY_ConnectedClient host = null;
@@ -68,15 +62,8 @@ namespace PartY
             }
 
             DontDestroyOnLoad(gameObject);
-            //path = Application.persistentDataPath;
-            
-
-            //for(int i = 0; i < 5; i++)
-            //    path = path.Remove(path.Length - 1);
 
             path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            //Debug.LogError(path);
 
             instance = this;
             SetServerStatus(false);
@@ -106,7 +93,6 @@ namespace PartY
             }
 
             Debug.Log("Client starting...");
-            //Debug.Log("Saving to... " + Application.persistentDataPath);
             TcpClient host_connection = new TcpClient();
             PartY_ConnectedClient connectedHost = new PartY_ConnectedClient(host_connection);
             host = connectedHost;
@@ -135,18 +121,6 @@ namespace PartY
                 }
                 else
                 {
-                    //ulong id_result;
-                    //bool didParse = ulong.TryParse(PlayerPrefs.GetString("ServerID"), out id_result);
-
-                    //if(didParse)
-                    //{
-                    //    SendTextData("Verify," + id_result);
-                    //}
-                    //else
-                    //{
-                    //    //Else, error, external modification of user ID, ask for new one.
-                    //    SendTextData("NeedTokenID");
-                    //}
                     Debug.Log("Token was read, verifying with host!");
                     SendTextData("Verify," + clientID);
                 }
@@ -171,8 +145,6 @@ namespace PartY
         {
             TcpClient tcpClient = listener.EndAcceptTcpClient(ar);
             myConnection = new PartY_ConnectedClient(tcpClient);
-            //clientList.Add(myConnection);
-            //host = myConnection;
             listener.BeginAcceptTcpClient(OnServerConnect, null);
             SetServerStatus(true);
         }
@@ -184,7 +156,6 @@ namespace PartY
             SetServerStatus(false);
             listener?.Stop();
             onDisconnect.Invoke();
-            //clientList.Remove(client);
         }
 
         public void SendTextData(string message)
@@ -194,13 +165,6 @@ namespace PartY
 
         internal void BroadcastTextMessage(string message)
         {
-            //for (int i = 0; i < instance.clientList.Count; i++)
-            //{
-            //    PartY_ConnectedClient client = instance.clientList[i];
-            //    client.SendTextData(message);
-            //}
-
-            //Debug.Assert(instance.host.stream.CanWrite, "Host is not writable!");
             instance.host.SendTextData(message);
         }
 
