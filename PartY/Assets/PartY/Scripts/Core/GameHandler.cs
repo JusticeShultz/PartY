@@ -42,7 +42,14 @@ public class GameHandler : MonoBehaviour
     #region Startup
     private void OnEnable()
     {
+        if(instance)
+        {
+            Destroy(instance.gameObject);
+        }
+
         instance = this;
+
+        DontDestroyOnLoad(gameObject);
 
         //Go through the host/clients and find yourself, removing all player controllers in the process if they are not on your player.
         //Additionally set up the example kinematic player handler so that the user can move around.
@@ -103,8 +110,12 @@ public class GameHandler : MonoBehaviour
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
+            Destroy(gameObject);
+
             return;
         }
+
+        if (PartY.LobbyHandler.myLobby == null) return;
 
         #region Payload sender [Send data up to server and ask for data back]
         //  [0]         [1]            [2]         [3]           [4]         [5]          [6]          [7]          [8]      [9]       [10]      [11]

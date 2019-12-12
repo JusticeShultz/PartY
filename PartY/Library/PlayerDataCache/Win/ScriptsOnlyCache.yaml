@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - KinematicCharacterController.KinematicCharacterMotor
     - Lava
     - LobbyData
+    - MouseControl
     - PartY.AutoUpdateLobby
     - PartY.LobbyHandler
     - PartY.LobbySpawner
@@ -85,39 +86,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9890}
     - Class: 114
-      Script: {instanceID: 10160}
+      Script: {instanceID: 9924}
     - Class: 114
-      Script: {instanceID: 10182}
+      Script: {instanceID: 10162}
     - Class: 114
-      Script: {instanceID: 10236}
+      Script: {instanceID: 10184}
     - Class: 114
-      Script: {instanceID: 10248}
+      Script: {instanceID: 10238}
     - Class: 114
-      Script: {instanceID: 10372}
+      Script: {instanceID: 10250}
     - Class: 114
-      Script: {instanceID: 10406}
+      Script: {instanceID: 10374}
     - Class: 114
-      Script: {instanceID: 10420}
+      Script: {instanceID: 10408}
     - Class: 114
-      Script: {instanceID: 10532}
+      Script: {instanceID: 10422}
     - Class: 114
-      Script: {instanceID: 10536}
+      Script: {instanceID: 10534}
     - Class: 114
-      Script: {instanceID: 10600}
+      Script: {instanceID: 10538}
     - Class: 114
-      Script: {instanceID: 10788}
+      Script: {instanceID: 10602}
     - Class: 114
-      Script: {instanceID: 11052}
+      Script: {instanceID: 10790}
     - Class: 114
-      Script: {instanceID: 11136}
+      Script: {instanceID: 11054}
     - Class: 114
-      Script: {instanceID: 11348}
+      Script: {instanceID: 11138}
     - Class: 114
-      Script: {instanceID: 11358}
+      Script: {instanceID: 11350}
     - Class: 114
-      Script: {instanceID: 11404}
+      Script: {instanceID: 11360}
     - Class: 114
-      Script: {instanceID: 11442}
+      Script: {instanceID: 11406}
+    - Class: 114
+      Script: {instanceID: 11444}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -227,7 +230,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: 7538ab9592f7f13c37cee144028d31f7
+      Hash: 93facbee4cf4a5ce9a1d3a0c37dd7b8b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameHandler
@@ -255,6 +258,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
+  - hash:
+      serializedVersion: 2
+      Hash: 7e1ccef004f4f3fc2ceeeb9c7575115b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MouseControl
   - hash:
       serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
