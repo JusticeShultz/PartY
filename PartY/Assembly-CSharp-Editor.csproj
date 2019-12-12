@@ -62,9 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Core\Editor\KinematicCharacterMotorEditor.cs" />
-    <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Core\Editor\ReadOnlyPropertyDrawer.cs" />
-    <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Examples\Scripts\Editor\PauseStateHandler.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Demo\ThirdParty\KinematicCharacterController\Core\Editor\KinematicCharacterMotorEditor.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Demo\ThirdParty\KinematicCharacterController\Core\Editor\ReadOnlyPropertyDrawer.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Demo\ThirdParty\KinematicCharacterController\Examples\Scripts\Editor\PauseStateHandler.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/s189081/Desktop/PartY/PartY/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

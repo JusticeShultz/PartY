@@ -9932,6 +9932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319803187}
+  - component: {fileID: 1319803188}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -9964,6 +9965,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1319803188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319803186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10991523c252c245b128a48501a34e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockMouse: 0
 --- !u!1 &1326762345
 GameObject:
   m_ObjectHideFlags: 0
@@ -9974,6 +9988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1326762346}
   - component: {fileID: 1326762347}
+  - component: {fileID: 1326762348}
   m_Layer: 0
   m_Name: GameHandler
   m_TagString: Untagged
@@ -10049,6 +10064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7472fd154436514bba78e1a33114edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaveGameKey: 27
   player: {fileID: 2068248048}
   players:
   - {fileID: 1293249652}
@@ -10056,6 +10072,19 @@ MonoBehaviour:
   - {fileID: 1884360585}
   - {fileID: 1355352216}
   myPlayer: {fileID: 0}
+--- !u!114 &1326762348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326762345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10991523c252c245b128a48501a34e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockMouse: 1
 --- !u!1 &1329738930
 GameObject:
   m_ObjectHideFlags: 0
@@ -11459,6 +11488,72 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1319803186}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1326762345}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 487411044}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1865448038}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1472959471}
+        m_MethodName: DestroyLobbyUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1472959471}
+        m_MethodName: DestroyLobbies
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1472959471
 MonoBehaviour:

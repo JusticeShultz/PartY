@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 namespace PartY
 {
+    //[Essential script]
+    /// <summary>
+    /// Handles the overall updating and modifying of Unity side things.
+    /// This script exists to allow threads to do what they need to, as well as interface with non-thread safe methods and actions.
+    /// </summary>
     public class LobbySpawner : MonoBehaviour
     {
         #region Data
@@ -30,10 +35,7 @@ namespace PartY
             {
                 needsUpdate = false;
 
-                for (int i = 0; i < LobbyHandler.lobby_UI.Count; i++)
-                {
-                    Destroy(LobbyHandler.lobby_UI[i]);
-                }
+                DestroyLobbyUI();
 
                 LobbyHandler.lobby_UI = new List<GameObject>();
 
@@ -273,6 +275,19 @@ namespace PartY
                 /*
                  * Set up any necessary game start logic here.
                  */
+            }
+        }
+
+        public void DestroyLobbies()
+        {
+            LobbyHandler.lobby_UI = new List<GameObject>();
+        }
+
+        public void DestroyLobbyUI()
+        {
+            for (int i = 0; i < LobbyHandler.lobby_UI.Count; i++)
+            {
+                Destroy(LobbyHandler.lobby_UI[i]);
             }
         }
     }

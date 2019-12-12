@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 namespace PartY
 {
+    //[Essential script]
+    /// <summary>
+    /// Handles the high level side of lobbies to allow events and scripts to easily access and do certain things.
+    /// </summary>
     public class LobbyHandler : MonoBehaviour
     {
         #region Data
@@ -85,7 +89,6 @@ namespace PartY
                         {
                             if (lobbies[i].clients[z] == usernameField.text)
                             {
-                                //lobbies[i].clients.Remove(lobbies[i].clients[z]);
                                 duplicateUsername.SetActive(true);
                                 return;
                             }
@@ -190,6 +193,7 @@ namespace PartY
         
         public void CloseLobby()
         {
+            //Close both the host and joiner lobby screens and open the main menu.
             _Menu.SetActive(true);
             _HostedLobby.SetActive(false);
             _JoinedLobby.SetActive(false);
@@ -197,6 +201,7 @@ namespace PartY
             //Send message to server about closing the lobby (This is to kick out any peeps who joined and properly remove the host)
             PartY.instance.SendTextData("ClLobby," + usernameField.text + "," + PartY.instance.clientID);
 
+            //Remove the lobby from your side.
             for (int i = 0; i < lobbies.Count; i++)
             {
                 if (lobbies[i].ownerUsername == usernameField.text)
@@ -205,26 +210,37 @@ namespace PartY
                 }
             }
 
+            //Make sure you no longer have a lobby.
             myLobby = null;
 
+            //Mark the lobby to update itself.
             RecreateLobbyUI();
         }
 
         public void RecreateLobbyUI()
         {
+            //Tell the handler that the lobby UI needs an update.
             LobbySpawner.needsUpdate = true;
         }
 
         private void OnApplicationQuit()
         {
+            //If you are currently hosting. (If this is not done, users will sit in a dead lobby and a ghost lobby will be formed)
             if (_HostedLobby.activeSelf)
             {
                 CloseLobby();
             }
 
+            //If you are currently in a lobby. (If this is not done, you will leave behind a ghost in the lobby)
             if (_JoinedLobby.activeSelf)
             {
                 LeaveLobby(myLobby.ownerUsername);
+            }
+
+            //If you need to do anything upon leaving an active game.
+            if(_GameHandler.activeSelf)
+            {
+
             }
         }
         #endregion

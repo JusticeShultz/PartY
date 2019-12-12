@@ -258,9 +258,20 @@ namespace PartY
                             {
                                 if (Program.instance.lobbyList[i].usersConnected.Count < 3)
                                 {
-                                    Program.instance.lobbyList[i].usersConnected.Add(new User(clientConnection, parser[2]));
-                                    joined = true;
+                                    bool duplicateUsername = false;
+
+                                    for(int z = 0; z < Program.instance.lobbyList[i].usersConnected.Count; z++)
+                                        if(Program.instance.lobbyList[i].usersConnected[z].username == parser[2])
+                                            duplicateUsername = true;
+
+                                    if (!duplicateUsername)
+                                    {
+                                        Program.instance.lobbyList[i].usersConnected.Add(new User(clientConnection, parser[2]));
+                                        joined = true;
+                                    }
+                                    else joined = false;
                                 }
+
                                 break;
                             }
                         }

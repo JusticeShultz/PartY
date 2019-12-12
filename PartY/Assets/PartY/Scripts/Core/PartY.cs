@@ -62,6 +62,11 @@ namespace PartY
         #region Unity Events
         public void Awake()
         {
+            if(instance != null)
+            {
+                Destroy(instance.gameObject);
+            }
+
             DontDestroyOnLoad(gameObject);
             //path = Application.persistentDataPath;
             
