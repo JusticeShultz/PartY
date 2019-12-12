@@ -26,3 +26,7 @@ PartY's client solution is built within Unity 2019.2.6f
 # If you find an issue
 ##### Please file bug reports here if you find any: https://github.com/JusticeShultz/PartY/issues
 ##### To check current known bugs, see: https://github.com/JusticeShultz/PartY/projects/1
+
+
+# Current Release
+https://github.com/JusticeShultz/PartY/releases/tag/0001
