@@ -7,8 +7,17 @@ PartY (pronounced the same as the word party), is a Unity C# networking solution
 
 
 # Getting started with using PartY
-*Need to add*
+
+### Server
+PartY's server solution is built within .NET Core 2.1. To get started, grab the latest release. Unzip the server into a folder. If you want to allow players to join over the net, port forward to port 27015. Once you are ready, run the executable.
+
+If you are developing, pull the repository and open up the server in visual studio/vs code (or whatever dev environment you are planning to use). Once you have the solution open, make sure it compiles. From here, you should have access to all code needed to add on to or modify the current state of the server.
+
+
+### Client
+PartY's client solution is built within Unity 2019.2.6f
 
 
 # Release Notes
-*Need to add*
+#### Early Alpha Release 0.4.28
+     -   First stable release of PartY
