@@ -21,3 +21,7 @@ PartY's client solution is built within Unity 2019.2.6f
 # Release Notes
 #### Early Alpha Release 0.4.28
      -   First stable release of PartY
+
+
+# If you find an issue
+Please file bug reports here if you find any https://github.com/JusticeShultz/PartY/issues
