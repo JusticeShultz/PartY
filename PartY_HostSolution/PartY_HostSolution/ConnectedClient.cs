@@ -391,17 +391,29 @@ namespace PartY
                         float yScale = 0;
                         float zScale = 0;
 
-                        bool xPosRes = float.TryParse(parser[2], out xPos);
-                        bool yPosRes = float.TryParse(parser[3], out yPos);
-                        bool zPosRes = float.TryParse(parser[4], out zPos);
+                        bool xPosRes = false;
+                        bool yPosRes = false;
+                        bool zPosRes = false;
 
-                        bool xRotRes = float.TryParse(parser[5], out xRot);
-                        bool yRotRes = float.TryParse(parser[6], out yRot);
-                        bool zRotRes = float.TryParse(parser[7], out zRot);
+                        xPosRes = float.TryParse(parser[2], out xPos);
+                        yPosRes = float.TryParse(parser[3], out yPos);
+                        zPosRes = float.TryParse(parser[4], out zPos);
 
-                        bool xScaleRes = float.TryParse(parser[5], out xScale);
-                        bool yScaleRes = float.TryParse(parser[6], out yScale);
-                        bool zScaleRes = float.TryParse(parser[7], out zScale);
+                        bool xRotRes = false;
+                        bool yRotRes = false;
+                        bool zRotRes = false;
+
+                        xRotRes = float.TryParse(parser[5], out xRot);
+                        yRotRes = float.TryParse(parser[6], out yRot);
+                        zRotRes = float.TryParse(parser[7], out zRot);
+
+                        bool xScaleRes = false;
+                        bool yScaleRes = false;
+                        bool zScaleRes = false;
+
+                        xScaleRes = float.TryParse(parser[8], out xScale);
+                        yScaleRes = float.TryParse(parser[9], out yScale);
+                        zScaleRes = float.TryParse(parser[10], out zScale);
 
                         int lobbyIndex = -1;
 
@@ -455,11 +467,16 @@ namespace PartY
                             #region Repack the lobby into a payload
 
                             //Inject the host data.
-                            string payload = "GamePayload," + Program.instance.lobbyList[lobbyIndex].host.username + "," + Program.instance.lobbyList[lobbyIndex].host.transform.position.x + "," +
-                                 Program.instance.lobbyList[lobbyIndex].host.transform.position.y + "," + Program.instance.lobbyList[lobbyIndex].host.transform.position.z + ","
-                                  + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.x + "," + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.y + ","
-                                   + Program.instance.lobbyList[lobbyIndex].host.transform.rotation.z + "," + Program.instance.lobbyList[lobbyIndex].host.transform.scale.x + ","
-                                    + Program.instance.lobbyList[lobbyIndex].host.transform.scale.y + "," + Program.instance.lobbyList[lobbyIndex].host.transform.scale.z;
+                            string payload = "GamePayload," + Program.instance.lobbyList[lobbyIndex].host.username + "," + 
+                                Program.instance.lobbyList[lobbyIndex].host.transform.position.x + "," + //pos x
+                                 Program.instance.lobbyList[lobbyIndex].host.transform.position.y + "," + //pos y 
+                                  Program.instance.lobbyList[lobbyIndex].host.transform.position.z + "," + //pos z
+                                   Program.instance.lobbyList[lobbyIndex].host.transform.rotation.x + "," + //rot x
+                                    Program.instance.lobbyList[lobbyIndex].host.transform.rotation.y + "," + //rot y 
+                                     Program.instance.lobbyList[lobbyIndex].host.transform.rotation.z + "," + //rot z
+                                      Program.instance.lobbyList[lobbyIndex].host.transform.scale.x    + "," + //scale x
+                                       Program.instance.lobbyList[lobbyIndex].host.transform.scale.y    + "," + //scale y 
+                                        Program.instance.lobbyList[lobbyIndex].host.transform.scale.z;           //scale z
 
                             //Tag on connected users.
                             for (int i = 0; i < Program.instance.lobbyList[lobbyIndex].usersConnected.Count; i++)

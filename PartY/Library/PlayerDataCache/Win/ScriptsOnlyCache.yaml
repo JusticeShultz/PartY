@@ -7,6 +7,7 @@ ScriptsOnlyBuild:
     - KinematicCharacterController.Examples.ExampleCharacterController
     - KinematicCharacterController.Examples.ExamplePlayer
     - KinematicCharacterController.KinematicCharacterMotor
+    - Lava
     - LobbyData
     - PartY.AutoUpdateLobby
     - PartY.LobbyHandler
@@ -115,6 +116,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11402}
     - Class: 114
       Script: {instanceID: 11440}
+    - Class: 114
+      Script: {instanceID: 64196}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -218,7 +221,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: e18a8869e55feb855ab200011c5d8e8a
+      Hash: 7538ab9592f7f13c37cee144028d31f7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameHandler
@@ -678,7 +681,13 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Lava
   platform: 5
   scenePathNames:
   - Assets/PartY/Demo/Scenes/ClientMenu.unity
-  playerPath: C:/Users/s189081/Desktop/ClientTest0111/PartY.exe
+  playerPath: Z:/Prog_Yr2/PartY/ClientTest00/PartY.exe

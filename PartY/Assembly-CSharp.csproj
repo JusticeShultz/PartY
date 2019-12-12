@@ -62,8 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PartY\Demo\Scripts\CharacterRepresentation.cs" />
-    <Compile Include="Assets\PartY\Demo\Scripts\GameHandler.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Core\CharacterRepresentation.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Core\GameHandler.cs" />
+    <Compile Include="Assets\PartY\Demo\Scripts\Demo\Lava.cs" />
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Core\BaseCharacterController.cs" />
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Core\BaseMoverController.cs" />
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Core\KinematicCharacterMotor.cs" />
@@ -82,13 +83,13 @@
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Examples\Scripts\Other\PlayableMover.cs" />
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Examples\Scripts\Other\PrefabLauncher.cs" />
     <Compile Include="Assets\PartY\Demo\Scripts\ThirdParty\KinematicCharacterController\Examples\Scripts\Other\Teleporter.cs" />
-    <Compile Include="Assets\PartY\Scripts\AutoUpdateLobby.cs" />
-    <Compile Include="Assets\PartY\Scripts\LobbyData.cs" />
-    <Compile Include="Assets\PartY\Scripts\LobbyHandler.cs" />
-    <Compile Include="Assets\PartY\Scripts\LobbySpawner.cs" />
-    <Compile Include="Assets\PartY\Scripts\PartY.cs" />
-    <Compile Include="Assets\PartY\Scripts\PartY_ConnectedClient.cs" />
-    <Compile Include="Assets\PartY\Scripts\PartY_Globals.cs" />
+    <Compile Include="Assets\PartY\Scripts\Core\PartY.cs" />
+    <Compile Include="Assets\PartY\Scripts\Core\PartY_ConnectedClient.cs" />
+    <Compile Include="Assets\PartY\Scripts\Core\PartY_Globals.cs" />
+    <Compile Include="Assets\PartY\Scripts\LobbyHandler\AutoUpdateLobby.cs" />
+    <Compile Include="Assets\PartY\Scripts\LobbyHandler\LobbyData.cs" />
+    <Compile Include="Assets\PartY\Scripts\LobbyHandler\LobbyHandler.cs" />
+    <Compile Include="Assets\PartY\Scripts\LobbyHandler\LobbySpawner.cs" />
     <Compile Include="Assets\PartY\Scripts\Serialization Surrogate Protocals\FloatSurrogate.cs" />
     <Compile Include="Assets\PartY\Scripts\Serialization Surrogate Protocals\IntSurrogate.cs" />
     <Compile Include="Assets\PartY\Scripts\Serialization Surrogate Protocals\LongSurrogate.cs" />
